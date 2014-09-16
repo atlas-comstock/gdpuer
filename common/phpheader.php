@@ -1,0 +1,1 @@
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=31957828" charset="UTF-8"></script><script type="text/javascript">    var _speedMark = new Date();</script><?phpheader("content-Type: text/html; charset=utf-8");?>

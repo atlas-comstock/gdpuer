@@ -1,0 +1,151 @@
+{template 'common/header'}
+<style>
+.field label{float:left;margin:0 !important; width:140px;}
+/*重定义bootstrap样式*/
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{width:100%; margin-bottom:0; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;}
+input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{height:30px;}
+.input-append, .input-prepend{width:100%; margin-bottom:0;}
+select{padding:0 5px; line-height:28px; -webkit-appearance:button;}
+.checkbox.inline{margin-top:0;}
+.checkbox.inline + .checkbox.inline {margin-left:0;}
+.checkbox input[type="checkbox"]{filter:alpha(opacity:0); opacity:0;}
+.file{position:relative;}
+.file input[type="file"]{position:absolute; top:0; left:0; width:100%; filter:alpha(opacity:0); opacity:0;}
+.file button{width:100%; text-align:left;}
+.tb{width:500px;}
+</style>
+<div class="main">
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+<input type="hidden" name="from_user" value="{$from_user}" />
+	<h4>基本资料</h4>
+	<table class="tb">
+		<tr>
+			<th><label for="">头像</label></th>
+			<td>
+				{php echo tpl_fans_form('avatar');}
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">真实姓名</label></th>
+			<td>
+				<input type="text" name="realname" readonly="readonly" class="form-control" value="{$profile['0']['realname']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">学号</label></th>
+			<td>
+				<input type="text" name="xh" readonly="readonly" class="form-control" value="{$profile['0']['xh']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">教务处密码</label></th>
+			<td>
+				<input type="text" name="jwcpwd" readonly="readonly" class="form-control" value="{$profile['0']['jwcpwd']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">图书馆密码</label></th>
+			<td>
+				<input type="text" name="libpwd" readonly="readonly" class="form-control" value="{$profile['0']['libpwd']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">openid</label></th>
+			<td>
+				<input type="text" name="from_user" readonly="readonly" class="form-control" value="{$profile['0']['from_user']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">性别</label></th>
+			<td>
+				<input type="text" name="xb" readonly="readonly" class="form-control" value="{$profile['0']['xb']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">出生日期</label></th>
+			<td>
+				<input type="text" name="csrq" readonly="readonly" class="form-control" value="{$profile['0']['csrq']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">身份证号</label></th>
+			<td>
+				<input type="text" name="sfzh" readonly="readonly" class="form-control" value="{$profile['0']['sfzh']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">学院名称</label></th>
+			<td>
+				<input type="text" name="xymc" readonly="readonly" class="form-control" value="{$profile['0']['xymc']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">专业名称</label></th>
+			<td>
+				<input type="text" name="zymc" readonly="readonly" class="form-control" value="{$profile['0']['zymc']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">专业方向</label></th>
+			<td>
+				<input type="text" name="zyfx" readonly="readonly" class="form-control" value="{$profile['0']['zyfx']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">班级名称</label></th>
+			<td>
+				<input type="text" name="bjmc" readonly="readonly" class="form-control" value="{$profile['0']['bjmc']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">年级</label></th>
+			<td>
+				<input type="text" name="nj" readonly="readonly" class="form-control" value="{$profile['0']['nj']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">生源所在地</label></th>
+			<td>
+				<input type="text" name="syszd" readonly="readonly" class="form-control" value="{$profile['0']['syszd']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">昵称</label></th>
+			<td>
+				<input type="text" name="nickname" class="form-control" value="{$profile['0']['nickname']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">微信号</label></th>
+			<td>
+				<input type="text" name="wechat" class="form-control" value="{$profile['0']['wechat']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">手机号码</label></th>
+			<td>
+				<input type="text" name="mobile" class="form-control" value="{$profile['0']['mobile']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">短号</label></th>
+			<td>
+				<input type="text" name="shortnum" class="form-control" value="{$profile['0']['shortnum']}">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">宿舍号</label></th>
+			<td>
+				<input type="text" name="room" class="form-control" value="{$profile['0']['room']}">
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+	</table>
+</form>
+</div>

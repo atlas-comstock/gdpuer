@@ -1,0 +1,15 @@
+<?php
+$url='http://branch2.gdpu.edu.cn/jyzd/index.php';
+$str=file_get_contents($url);
+$search = '/<ul width="380" height="210" id="zh_info">(.*?)<\/ul>/is';
+preg_match_all($search,$str,$r,PREG_SET_ORDER );
+$pat = '/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/i';
+preg_match_all($pat, $r[0][0],$match, PREG_SET_ORDER);
+$str='';
+foreach($match as $key=>$row){
+	if($key<9){
+		$str=$str.'@title|'.($key+1).'.'.$row[4].'#url|http://10.50.25.9/helper/api/jobs/'.$row[2].'#pic';
+	}
+}
+echo 'title|就业信息'.$str;
+?>

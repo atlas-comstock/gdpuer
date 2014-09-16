@@ -1,0 +1,137 @@
+﻿<?php
+header("content-Type: text/html; charset=utf-8");
+include("db.php");
+
+$nf='2013-2014';
+$xh=$_GET['xh'];
+$mode=$_GET['mode'];
+$pw=$_GET['pw'];
+$api_url='http://127.0.0.1/api/jwcapi.php?xh='.$xh.'&pw='.$pw.'&flag=2';
+$str=file_get_contents($api_url);
+if(strstr($str,"<script>")){
+echo "【账号】或【密码】错误";
+return;
+}
+
+
+{//输出名字
+$sql_name = "SELECT * FROM `jwc_personinfo` WHERE `xh` = '{$xh}' LIMIT 1 ";
+$query_char=mysql_query("SET NAMES UTF8");
+$query_name=mysql_query($sql_name,$link) or die(mysql_error());
+$name_ret=mysql_fetch_row($query_name);
+$name=$name_ret[2];
+$xb=$name_ret[4];
+if($xb=='男'){$ch='同学';}
+if($xb=='女'){$ch='同学';}
+}
+
+
+{//搜索数据库是否已经有数据
+$sql_check = "SELECT * FROM `jwc_chengji` WHERE `xh` = '{$xh}' LIMIT 1 ";
+$query_char=mysql_query("SET NAMES UTF8");
+$query_check=mysql_query($sql_check,$link) or die(mysql_error());
+$check_ret=mysql_fetch_row($query_check);
+}
+
+/* 判断0910级
+if(mb_strcut($xh, 0, 2, 'utf-8')=='10'||mb_strcut($xh, 0, 2, 'utf-8')=='09'){
+  echo "亲爱的{$name} {$ch}\n\n由于您的成绩数据太多了...微信显示不过来，希望您能到网站上查询\n\nPC网页版查询地址\n\nwww.i694.net\chengji\n(节省流量推荐用电脑打开)\n\n给你们带来不便\n望能多多体谅";
+return;
+
+}
+*/
+if(($mode=='nf')||($mode==''))
+{
+$str2=explode($nf,$check_ret[2]);
+		$string='';
+		foreach($str2 as $key=>$a)
+		{
+			if($key>=1)
+			{
+			$a=$nf.$a;
+			$string=$string.$a;
+			}
+        }
+}
+if($mode=='all')
+{
+		$string=$check_ret[2];
+}
+
+if($string=="\n\n"){
+
+  $title="{$name} {$ch}欢迎使用<br>【广药学生成绩查询】<br>【{$nf}学年】";
+echo $title."<br><br>".$string;
+po_chengji($str,$xh,$name,$ch,$link);
+}
+if(!$check_ret[1]){
+echo "亲爱的{$name} {$ch}<br>正在为你链接到教务处...<br>请重新发送<br><br>成绩#学号#密码<br><br>来获得最新成绩信息";
+po_chengji($str,$xh,$name,$ch,$link);
+}else{
+$title="{$name} {$ch}欢迎使用\n【广药学生成绩查询】\n【{$nf}学年】";
+$cj=$title."\n\n".$string;
+$cj=str_replace("\n","</br>",$cj);
+echo $cj;
+po_chengji($str,$xh,$name,$ch,$link);
+}
+
+
+
+function get_utf8_string($content) 
+	{    	  
+		$encoding = mb_detect_encoding($content, array('ASCII','UTF-8','GB2312','GBK','BIG5'));  
+		return  mb_convert_encoding($content, 'utf-8', $encoding);
+	}
+	
+function po_chengji_db($xh,$name,$ret,$link) 
+	{    	  
+		$sql_po_chengji = "REPLACE INTO `jwc_chengji` (`xh`, `name`,`chengji`, `time`) VALUES ('{$xh}','{$name}', '{$ret}', TIMESTAMP(10));";
+        $query_char=mysql_query("SET NAMES UTF8");
+        $query_po_chengji=mysql_query($sql_po_chengji,$link) or die(mysql_error());
+	}
+
+function po_chengji($str,$xh,$name,$ch,$link) 
+	{    
+		$zxfxj=get_utf8_string("%实得总学分小计:");
+		$pjxfjd=get_utf8_string("%平均学分绩点:");
+		$zxfjd=get_utf8_string("%总学分绩点");
+
+		$str=str_replace("</font></span></td>  	</tr>","%",$str);
+		$str=str_replace("</td>  	</tr>","】",$str);
+		$str=str_replace("<tr>  		<td>","【",$str);
+		$str=str_replace('<tr bgcolor="#C1D8F0">  		<td>',"【",$str);
+		$str=str_replace('<tr bgcolor="#EEF3F9">  		<td>',"【",$str);
+		$str=str_replace('<span id="Szxf"><font color="MediumBlue">',$zxfxj,$str);
+		$str=str_replace('<span id="pjxfjd">',$pjxfjd,$str);
+		$str=str_replace('<span id="zxfjd"><font color="DarkRed">',$zxfjd,$str);
+		$str=str_replace('<span id="yhzxf"><font color="DarkRed">',"%",$str);
+		$str=str_replace('</font></span>',"%】",$str);
+		$str=str_replace("<td>&nbsp;</td>","",$str);
+		$str=str_replace("<td>"," ",$str);
+		$str=str_replace("<tr>","",$str);
+		$str=str_replace("</tr>"," ",$str);
+		$str=strip_tags($str);
+
+
+		$str=explode("%",$str);
+		$str2=explode("【",$str[0]);
+
+		$string='';
+		foreach($str2 as $key=>$a){
+			if($key>=2){
+			$a=str_replace("】","\n\n",$a);
+			$string=$string.$a;
+			}
+	
+		}
+		
+		
+		$ret=$string."\n".$str[4]."\n".$str[6]."\n".$str[8];
+	if($string!=="\n\n"){
+		$sql_po_chengji = "REPLACE INTO `jwc_chengji` (`xh`, `name`,`chengji`, `time`) VALUES ('{$xh}','{$name}', '{$ret}', TIMESTAMP(10));";
+        $query_char=mysql_query("SET NAMES UTF8");
+        $query_po_chengji=mysql_query($sql_po_chengji,$link) or die(mysql_error());
+	}
+	}
+//print_r($str);
+?>

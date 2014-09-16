@@ -1,0 +1,24 @@
+<xml>
+    <ToUserName><![CDATA[oqrX-jhsZGZehLCfrvJPH3_nBf7M]]></ToUserName>
+    <FromUserName><![CDATA[gh_b3b5daa92999]]></FromUserName>
+    <CreateTime>1410854345</CreateTime>
+    <MsgType><![CDATA[news]]></MsgType>
+    <Content><![CDATA[]]></Content>
+    <ArticleCount>2</ArticleCount>
+    <Articles>
+        <item>
+            <Title><![CDATA[成绩单]]></Title>
+            <Discription><![CDATA[]]></Discription>
+            <PicUrl><![CDATA[]]></PicUrl> 
+            <Url><![CDATA[]]></Url>
+        </item>
+        <item>
+            <Title><![CDATA[亲爱的学霸Orz，这是您的成绩单请笑纳~^_^(单击获取，若页面为空请确认密码学号无误)]]></Title>
+            <Discription><![CDATA[]]></Discription>
+            <PicUrl><![CDATA[]]></PicUrl> 
+            <Url><![CDATA[http://av.jejeso.com/helper/api/get_chengji.php?xh=1310502243&pw=1310502243]]></Url>
+        </item>
+
+    </Articles>
+    <FuncFlag>0</FuncFlag>
+</xml> 

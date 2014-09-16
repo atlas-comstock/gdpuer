@@ -1,0 +1,315 @@
+  {if !strpos($_SERVER["HTTP_USER_AGENT"],"MicroMessenger")}
+非法请求，请使用微信打开
+{else} 
+
+<html>
+  
+  <head>
+  <style type="text/css">	
+/*window*/
+.window {
+	width:267px;
+	position:absolute;
+	display:none;
+	margin:0px auto 0 -136px;
+	padding:2px;
+	bottom:60px;
+	left:50%;
+	border-radius:0.6em;
+	-webkit-border-radius:0.6em;
+	-moz-border-radius:0.6em;
+	background-color: #f1f1f1;
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	-o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	font:14px/1.5 Microsoft YaHei, Helvitica, Verdana, Arial, san-serif;
+	z-index:10;
+}
+.window .wtitle {
+	background-color: #585858;
+	line-height: 26px;
+	padding: 5px 5px 5px 10px;
+	color:#ffffff;
+	font-size:16px;
+	border-radius:0.5em 0.5em 0 0;
+	-webkit-border-radius:0.5em 0.5em 0 0;
+	-moz-border-radius:0.5em 0.5em 0 0;
+}
+.window .content {
+	/*min-height:100px;*/
+	overflow:auto;
+	padding:10px;
+	background: linear-gradient(#FBFBFB, #EEEEEE) repeat scroll 0 0 #FFF9DF;
+	color: #222222;
+	text-shadow: 0 1px 0 #FFFFFF;
+	border-radius: 0 0 0.6em 0.6em;
+	-webkit-border-radius: 0 0 0.6em 0.6em;
+	-moz-border-radius: 0 0 0.6em 0.6em;
+}
+.window #txt {
+	min-height:30px;
+	font-size:14px;
+	line-height:20px;
+}
+.window .content p {
+	margin:10px 0 0 0;
+}
+
+.window close {
+	float:right;
+	background-image: url("http://picm.photophoto.cn/015/037/006/0370060443.jpg");
+	width:26px;
+	height:26px;
+	display:block;
+}
+
+#overlay {
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:#000000;
+	opacity:0.5;
+	filter:alpha(opacity=0);
+	display:none;
+	z-index: 9;
+}
+</style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      账号绑定
+    </title>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">
+	
+	
+	
+	
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+	
+	
+	
+    <script>
+	var url="{php echo create_url('mobile/module/check', array( 'name' => 'stubind', 'id' => $id,'weid'=> $we['weid'],'from_user' => $_GPC['from_user']));}";
+
+      var openid = {$from_user};
+    </script>
+    <script>
+      var _hmt = _hmt || []; (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?c8c6b4ac78fb9378987b263d5babdb1a";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  
+  <body>
+
+    <div data-role="page">
+      <!-- header begin-->
+      <div data-role="header">
+        <h1>
+          账号绑定
+        </h1>
+      </div>
+      <!-- content begin-->
+      <div data-role="content">
+        <div id='pre'>
+		 <div class="window" id="windowcenter" >
+		<div id="title" class="wtitle">
+		<span class="close" id="alertclose">X</span>
+		</div>
+		<div class="content">
+		<div id="txt"></div>
+		</div>
+		</div> 
+		
+		<br>为了<font color=blue>确保</font>各种功能的<font color=blue>正常</font>使用<font color=red>*</font>为必填
+          <form method="post" action="" id="bd">
+            <div data-role="fieldcontain">
+              <label for="stuid">
+                学号<font color=red>*</font>
+              </label>
+              <input id="stuid" placeholder="请输入学号" value="" type="text" />
+            </div>
+            <div data-role="fieldcontain">
+              <label for="jwpw">
+                教务系统密码<font color=red>*</font>
+              </label>
+              <input id="jwpw" placeholder="请输入教务系统密码，默认为学号" value="" type="password"
+              />
+            </div>
+            <div data-role="fieldcontain">
+              <label for="libpw">
+                图书馆密码<font color=red>*</font>
+              </label>
+              <input id="libpw" placeholder="请输入图书馆密码，默认为6个6（由于有些人都忘记了..那就随便写吧）" value="" type="password" />
+            </div>
+			<div data-role="fieldcontain">
+              <label for="nickname">
+                昵称<font color=red>*</font>
+              </label>
+              <input id="nickname" placeholder="用于小助手各种活动称呼" value="" type="text" />
+            </div>
+			<div data-role="fieldcontain">
+              <label for="wehcat">
+                微信号<font color=red>*</font>
+              </label>
+              <input id="wechat" placeholder="用于小助手交友平台，如y-yanson" value="" type="text" />
+            </div>
+			<div data-role="fieldcontain">
+              <label for="mobile">
+                手机长号<font color=red>*</font>
+              </label>
+              <input id="mobile" placeholder="用于联系你领取某些活动奖品" value="" type="text" />
+            </div>
+			<div data-role="fieldcontain">
+              <label for="shortnum">
+                手机短号
+              </label>
+              <input id="shortnum" placeholder="用于联系你领取某些活动奖品" value="" type="text" />
+            </div>
+			<div data-role="fieldcontain">
+              <label for="room">
+                宿舍号
+              </label>
+              <input id="room" placeholder="用于联系你领取某些活动奖品，如5-101" value="" type="text" />
+            </div>
+            <a data-role="button" data-transition="fade" id="bind-btn" data-theme="a">
+              绑定
+            </a>
+          </form> 
+		 </div>
+       <ul data-role="listview" id="list">
+        </ul>
+        
+      </div>
+      <!-- footer begin-->
+      <div data-role="footer">
+        <h1>
+          Copyright 2014 OURStudio by Yanson
+        </h1>
+      </div>
+    </div>
+    <script>
+	
+      $('#bind-btn').on('click',function() {
+        $.mobile.showPageLoadingMsg();
+		
+		if($("#stuid").val()==''){
+		 $.mobile.hidePageLoadingMsg();
+		alertdiy('学号必须填写',"亲你忘了写学号了！");return false;
+		}
+		if($("#jwpw").val()==''){
+			$.mobile.hidePageLoadingMsg();
+			alertdiy('教务处密码必须填写',"亲你忘了写教务处密码了！");return false;
+		}
+		if($("#libpw").val()==''){
+		 $.mobile.hidePageLoadingMsg();
+		alertdiy('图书馆密码必须填写',"亲你忘了写图书馆密码了！");return false;
+		}
+		if($("#wechat").val()==''){
+		 $.mobile.hidePageLoadingMsg();
+			alertdiy('微信号必须填写',"亲你忘了写你的微信号了！后期会发展成交友功能哦");return false;
+		}
+		if($("#nickname").val()==''){
+		 $.mobile.hidePageLoadingMsg();
+		alertdiy('昵称必须填写',"亲你忘了写昵称了！这个是在各种活动中显示的哟");return false;
+		}
+		if($("#mobile").val()==''){
+		 $.mobile.hidePageLoadingMsg();
+		alertdiy('手机号码必须填写',"亲你忘了写手机号码了！万一以后中奖了怎么联系你呀");return false;
+		}
+		reg=/^0{0,1}(13[0-9]|145|15[0-9]|153|156|18[0-9])[0-9]{8}$/i;
+		if(!reg.test($("#mobile").val())){   
+		$.mobile.hidePageLoadingMsg();
+			alertdiy("错误","请输入正确的11位手机号！");
+			return false;
+		} 
+
+		
+       $.ajax({
+          url: url,
+          type: 'post',
+          data: 'stuid=' + $('#stuid').val() + '&libpw=' + $('#libpw').val() + '&jwpw=' + $('#jwpw').val() + '&wechat=' + $('#wechat').val() +'&nickname=' + $('#nickname').val() +'&mobile=' + $('#mobile').val() +'&shortnum=' + $('#shortnum').val() +'&room=' + $('#room').val()+'&type=setinfo', 
+          dataType: 'json',
+          success: function(e, t) {
+		  //WeixinJSBridge.call('showOptionMenu');
+            $.mobile.hidePageLoadingMsg();
+            if (e.msg == 'success') {
+			  
+              $('#pre').html('<div id="suc" style="margin-top:10px;"><center><h1 style="color:red">绑定成功</h1></center></div>');
+              $("#list").append('<li data-icon="star"><a href="#"><h2>学号：</h2><p>' + e.data.xh + '</p></a></li>' + '<li data-icon="star"><a href="#"><h2>姓名：</h2><p>' + e.data.xm + '</p></a></li>' + '<li data-icon="star"><a href="#"><h2>性别：</h2><p>' + e.data.xb + '</p></a></li>' + '<li data-icon="star"><a href="#"><h2>年级：</h2><p>' + e.data.nj + '</p></a></li>' + '<li data-icon="star"><a href="#"><h2>班级：</h2><p>' + e.data.bjmc + '</p></a></li>'+ '<li data-icon="star"><a href="#"><h2>昵称：</h2><p>' + e.nickname + '</p></a></li>'+ '<li data-icon="star"><a href="#"><h2>微信：</h2><p>' + e.wechat + '</p></a></li>'+ '<li data-icon="star"><a href="#"><h2>长号：</h2><p>' + e.mobile + '</p></a></li>'+ '<li data-icon="star"><a href="#"><h2>短号：</h2><p>' + e.shortnum + '</p></a></li>'+ '<li data-icon="star"><a href="#"><h2>宿舍号：</h2><p>' + e.room + '</p></a></li>').listview('refresh')
+			  
+            } 
+			if (e.msg == 'lib_error') 
+			{
+              alertdiy("图书馆密码错误","【图书馆】登陆认证不通过<br><br>请【查证】学号、图书馆密码信息");
+            }
+			if (e.msg == 'jwc_error') 
+			{
+              alertdiy("教务处密码错误","【教务处】登陆认证不通过<br><br>请【查证】学号、教务处密码信息");
+            }
+			if (e.msg == 'error') 
+			{
+              alertdiy("教务处和图书馆密码错误","【教务处和图书馆】登陆认证均不通过<br><br>请【查证】学号、教务处密码、图书馆密码信息");
+            }
+          },
+          error: function(e,ts,et) {
+		  alert('异步返回有误,错误码'+ts);
+            $.mobile.hidePageLoadingMsg();
+            alertdiy('绑定失败,请检查网络');
+          }
+        });
+		
+ 
+
+		
+		
+		
+	}); 	
+		
+
+	  
+	  
+function alertdiy(title,txt){ 
+//var windowHeight; 
+//var windowWidth; 
+//var popWidth;  
+//var popHeight; 
+//windowHeight=$(window).height(); 
+//windowWidth=$(window).width(); 
+//popHeight=$(".window").height(); 
+//popWidth=$(".window").width(); 
+//var popY=(windowHeight-popHeight)/2; 
+//var popX=(windowWidth-popWidth)/2; 
+//$("#windowcenter").css("top",popY).css("left",popX).slideToggle("slow"); 
+$("#windowcenter").slideToggle("slow"); 
+$("#txt").html(txt);
+$("#title").html(title);
+//$("#windowcenter").hide("slow"); 
+setTimeout('$("#windowcenter").slideUp(500)',8000);
+} 	  
+
+	  
+	  
+	  
+    </script>
+	<script type="text/javascript">
+
+
+	
+	
+            document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+                WeixinJSBridge.call('hideToolbar');
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+     </script>
+  </body>
+
+</html>
+{/if}
