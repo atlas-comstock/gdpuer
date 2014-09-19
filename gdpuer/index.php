@@ -62,11 +62,11 @@ function reply_main($request, $w)
     //用户发语音时回复语音或音乐
     else if ($w->get_msg_type() == "voice") {
         return array(
-                "title" =>  "你好",
-                "description" =>  "亲爱的主人",           
-                "murl" =>  "http://weixen-file.stor.sinaapp.com/b/xiaojo.mp3",
-                "hqurl" =>  "http://weixen-file.stor.sinaapp.com/b/xiaojo.mp3",
-                );
+            "title" =>  "你好",
+            "description" =>  "亲爱的主人",           
+            "murl" =>  "http://weixen-file.stor.sinaapp.com/b/xiaojo.mp3",
+            "hqurl" =>  "http://weixen-file.stor.sinaapp.com/b/xiaojo.mp3",
+        );
     }
     //事件检测
     else if ($w->get_msg_type() == "event") { 
@@ -98,37 +98,37 @@ function reply_main($request, $w)
 
     //开户指南
     if(strstr($content, '开')){
-    	$url = 'http://mp.weixin.qq.com/s?__biz=MjM5OTA1NzMyMg==&mid=201721356&idx=1&sn=2ab0f94f0514fc6d01b5addc76caf446&scene=4#wechat_redirect';
-    	$content = '#title|开户@title|开户指南入口'.'#url|'.$url.'#pic';
+        $url = 'http://mp.weixin.qq.com/s?__biz=MjM5OTA1NzMyMg==&mid=201721356&idx=1&sn=2ab0f94f0514fc6d01b5addc76caf446&scene=4#wechat_redirect';
+        $content = '#title|开户@title|开户指南入口'.'#url|'.$url.'#pic';
 
-                if(strstr($content,'pic'))//多图文回复
+        if(strstr($content,'pic'))//多图文回复
+        {
+            $a=array();
+            $b=array();
+            $c=array();
+            $n=0;
+            $contents = $content;
+            foreach (explode('@t',$content) as $b[$n])
+            {
+                if(strstr($contents,'@t'))
                 {
-                    $a=array();
-                    $b=array();
-                    $c=array();
-                    $n=0;
-                    $contents = $content;
-                    foreach (explode('@t',$content) as $b[$n])
-                    {
-                        if(strstr($contents,'@t'))
-                        {
-                            $b[$n] = str_replace("itle","title",$b[$n]);
-                            $b[$n] = str_replace("ttitle","title",$b[$n]);
-                        }
-
-                        foreach (explode('#',$b[$n]) as $content)
-                        {
-                            list($k,$v)=explode('|',$content);
-                            $a[$k]=$v;
-                            $d.= $k;
-                        }
-                        $c[$n] = $a;
-                        $n++;
-
-                    }
-                    $content = $c ;
+                    $b[$n] = str_replace("itle","title",$b[$n]);
+                    $b[$n] = str_replace("ttitle","title",$b[$n]);
                 }
-                return $content;
+
+                foreach (explode('#',$b[$n]) as $content)
+                {
+                    list($k,$v)=explode('|',$content);
+                    $a[$k]=$v;
+                    $d.= $k;
+                }
+                $c[$n] = $a;
+                $n++;
+
+            }
+            $content = $c ;
+        }
+        return $content;
     }
 
 
@@ -155,7 +155,7 @@ function reply_main($request, $w)
             $xh=$ret[1];
             $pw=$ret[2];
             if(($xh)&&($pw)){
-               // $url = 'http://phpdo9.nat123.net:52182/helper/api/jwcapi.php?xh='.$xh.'&pw='.$pw.'&flag=2';
+                // $url = 'http://phpdo9.nat123.net:52182/helper/api/jwcapi.php?xh='.$xh.'&pw='.$pw.'&flag=2';
                 $url='http://av.jejeso.com/helper/api/get_chengji.php?xh='.$xh.'&pw='.$pw;
                 //2014 09 15 $content = file_get_contents($url);
                 //			$content = explode("2014学年",$content);
@@ -283,37 +283,37 @@ function reply_main($request, $w)
             return $content;
         }
 
-       else if(strstr($content,"建议") || strstr($content,"意见") || strstr($content,"投诉")){
+        else if(strstr($content,"建议") || strstr($content,"意见") || strstr($content,"投诉")){
             // $content = "请打开网站：<a>http://av.jejeso.com/helper/api/add_advices/commit.html</a>，进去提建议，谢谢：）";
             $content = "#title|有奖征集意见@title|填写意见点此进入.感谢您的建议#url|http://av.jejeso.com/helper/api/add_advices/commit.html#pic";
-              if(strstr($content,'pic'))//多图文回复
+            if(strstr($content,'pic'))//多图文回复
+            {
+                $a=array();
+                $b=array();
+                $c=array();
+                $n=0;
+                $contents = $content;
+                foreach (explode('@t',$content) as $b[$n])
                 {
-                    $a=array();
-                    $b=array();
-                    $c=array();
-                    $n=0;
-                    $contents = $content;
-                    foreach (explode('@t',$content) as $b[$n])
+                    if(strstr($contents,'@t'))
                     {
-                        if(strstr($contents,'@t'))
-                        {
-                            $b[$n] = str_replace("itle","title",$b[$n]);
-                            $b[$n] = str_replace("ttitle","title",$b[$n]);
-                        }
-
-                        foreach (explode('#',$b[$n]) as $content)
-                        {
-                            list($k,$v)=explode('|',$content);
-                            $a[$k]=$v;
-                            $d.= $k;
-                        }
-                        $c[$n] = $a;
-                        $n++;
-
+                        $b[$n] = str_replace("itle","title",$b[$n]);
+                        $b[$n] = str_replace("ttitle","title",$b[$n]);
                     }
-                    $content = $c ;
+
+                    foreach (explode('#',$b[$n]) as $content)
+                    {
+                        list($k,$v)=explode('|',$content);
+                        $a[$k]=$v;
+                        $d.= $k;
+                    }
+                    $c[$n] = $a;
+                    $n++;
+
                 }
-                return $content;
+                $content = $c ;
+            }
+            return $content;
         }
 
         //menu内容
@@ -326,7 +326,7 @@ function reply_main($request, $w)
             // $url = 'http://zlgc.gdpu.edu.cn/gdpuer/api.php?flag='.$flag.'&content='.$content;		
             //     $content= file_get_contents($url);
             if($flag=="6"){$content = "查询接口http://www.gzekt.com";}
-            
+
         }
         //通过广药外网网接口获得返回内容
         else if($flag=="gdpuapi"){
@@ -350,7 +350,7 @@ function reply_main($request, $w)
                 $xh = $array[1];
                 if($xh==''){$content = "查询正确格式为:\n还书#学号";}
                 else{
-                   // $keyword=str_replace("还书","",$content);
+                    // $keyword=str_replace("还书","",$content);
                     // $content=$g->get_lib_boorowbook($keyword);
                     $content=$g->get_lib_boorowbook($xh);
                 }
@@ -374,8 +374,8 @@ function reply_main($request, $w)
                     if($zkzh && $xm){
                         $url = 'http://av.jejeso.com/helper/chengji/cet_wx.php?zkzh='.$zkzh.'&xm='.$xm;
                         $content= file_get_contents($url);
-                    if ($content=="")
-                        $content="无法查找到你的成绩，请检查学号、姓名是否正确\n";
+                        if ($content=="")
+                            $content="无法查找到你的成绩，请检查学号、姓名是否正确\n";
                         return $content;
                         //  $content="请确认信息全部正确，比如名字一定要全称，不能简写。收到最新消息称要到9点各网站才开通查询4，6级成绩";
                     }
@@ -448,7 +448,7 @@ function reply_main($request, $w)
                     $content=$o->get_bus($city,$no);
                 }
             }
-            
+
             else if(strstr($content,"翻译")||$content=="E"||$content=="e"){
                 $date = explode("#", $content);
                 $key = $date[1];
@@ -458,12 +458,12 @@ function reply_main($request, $w)
                     $content = $o->enTozh($key);
                 }
             }
-            
+
             else if(strstr($content,"找找帮")||$content="8"){
                 $text=str_replace('找找帮','',$content);
                 $content=$o->send_ours_zzbon($text,$from);
             }
-            
+
             else if(strstr($content,"音乐")){
                 $content=$o->get_song_tencent($content);
                 $content=mb_convert_encoding($content, 'utf-8', 'gbk');
