@@ -220,8 +220,9 @@ function reply_main($request, $w)
                 }
             }
             if(($xh)&&($pw)){
-                $url = 'http://phpdo9.nat123.net:52182/helper/kb/kb.php?xh='.$xh.'&pw='.$pw.'&day='.$day;	
-                    $content= file_get_contents($url);
+                $url = 'http://ours.123nat.com:59832/helper/kb/kb.php?xh='.$xh.'&pw='.$pw.'&day='.$day;	
+                // $url = 'http://phpdo9.nat123.net:52182/helper/kb/kb.php?xh='.$xh.'&pw='.$pw.'&day='.$day;	
+                $content= file_get_contents($url);
             }elseif((!$xh)||(!$pw)){
                 // $content="【现已支持所有校区】\n按照以下格式获取课表\n\n【今天课表】\n课表#学号#密码\n\n【周X课表】\n课表#学号#密码#X\n\n(X为1-5,或者是all，否则均默认为当天，周六、日显示全部课表)\n\n【例如】\n获取今天课表：\n课表#1207511199#1207511199\n\n获取周1课表：\n课表#1207511199#1207511199#1\n\n获取全部课表：\n课表#1207511199#1207511199#all";
                 $content="【现已支持所有校区】\n按照以下格式获取课表\n\n【今天课表】\n课表#学号#密码\n\n【周X课表】\n课表#学号#密码#X\n\n(X为1-5,或者是all，否则均默认为当天，周六、日显示全部课表)\n\n【例如】\n获取今天课表：\n课表#1207511199#1207511199\n\n获取周1课表：\n课表#1207511199#1207511199#1";
@@ -240,7 +241,8 @@ function reply_main($request, $w)
             $xh=$ret[1];
             $pw=$ret[2];
             if(($xh)&&($pw)){
-                $url = 'http://phpdo9.nat123.net:52182/helper/jwc/wx.xuanxiu.api.php?xh='.$xh.'&pw='.$pw;
+                //$url = 'http://phpdo9.nat123.net:52182/helper/jwc/wx.xuanxiu.api.php?xh='.$xh.'&pw='.$pw;
+                $url = 'hhttp://ours.123nat.com:59832/helper/jwc/wx.xuanxiu.api.php?xh='.$xh.'&pw='.$pw;
                 $content= file_get_contents($url);
             }elseif((!$xh)||(!$pw)){
                 $content="请确认【格式】是否正确\n\n选修#学号#密码";
@@ -281,10 +283,37 @@ function reply_main($request, $w)
             return $content;
         }
 
-        else if(strstr($content,"建议") || strstr($content,"意见") || strstr($content,"投诉")){
+       else if(strstr($content,"建议") || strstr($content,"意见") || strstr($content,"投诉")){
             // $content = "请打开网站：<a>http://av.jejeso.com/helper/api/add_advices/commit.html</a>，进去提建议，谢谢：）";
-            $content = "http://av.jejeso.com/helper/api/add_advices/commit.html\n复制网址到您的浏览器中\n即可建议\n感谢您宝贵的建议:）";
-            return $content;
+            $content = "#title|有奖征集意见@title|填写意见点此进入.感谢您的建议#url|http://av.jejeso.com/helper/api/add_advices/commit.html#pic";
+              if(strstr($content,'pic'))//多图文回复
+                {
+                    $a=array();
+                    $b=array();
+                    $c=array();
+                    $n=0;
+                    $contents = $content;
+                    foreach (explode('@t',$content) as $b[$n])
+                    {
+                        if(strstr($contents,'@t'))
+                        {
+                            $b[$n] = str_replace("itle","title",$b[$n]);
+                            $b[$n] = str_replace("ttitle","title",$b[$n]);
+                        }
+
+                        foreach (explode('#',$b[$n]) as $content)
+                        {
+                            list($k,$v)=explode('|',$content);
+                            $a[$k]=$v;
+                            $d.= $k;
+                        }
+                        $c[$n] = $a;
+                        $n++;
+
+                    }
+                    $content = $c ;
+                }
+                return $content;
         }
 
         //menu内容
