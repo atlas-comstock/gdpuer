@@ -15,7 +15,7 @@ if (isset($_GET['day']) && ($_GET['day'] == 'all')) {
     $all = 'all';
 }
 
-$url  = 'http://127.0.0.1/api/jwcapi.php?xh=' . $xh . '&pw=' . $pw . '&flag=1';
+$url  = 'http://127.0.0.1/helper/api/jwcapi.php?xh=' . $xh . '&pw=' . $pw . '&flag=1';
 $info = file_get_contents($url);
 $info = json_decode($info, true);
 $xm   = $info['xm'];
@@ -95,7 +95,7 @@ function day($date)
 }
 function xuanxiu($xh,$pw,$nf='学年:2013-2014')
 {
-$api_url='http://127.0.0.1/api/jwcapi.php?xh='.$xh.'&pw='.$pw.'&flag=3';
+$api_url='http://127.0.0.1/helper/api/jwcapi.php?xh='.$xh.'&pw='.$pw.'&flag=3';
 $str=file_get_contents($api_url);
 
 		$str=str_replace("<tr>  		<td>","【",$str);
