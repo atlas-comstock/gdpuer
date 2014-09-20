@@ -58,7 +58,7 @@ foreach ($list as $a => $b) {
             $afternoon .= $v['gdpukb_content'] . "\n";
         }
     }
-    
+
     if ($day != 0 & $day != 6 && $all != 'all') {
         $str .= "【 星 期 " . day($day) . " 】\n" . $morning . $afternoon . "\n";
     } else {
