@@ -28,7 +28,7 @@ if ((!$xm) || (!$bj)) {
 
 
 $date    = date("w");
-$dayinfo = "【现已支持所有校区】\n【有个人信息但是没有课表信息的请把班级名字反馈到gdpuer@126.com】\n\n$bj\n [" . $xm . "] 童鞋\n" . "今天是 星 期 ";
+$dayinfo = "【现已支持所有校区】\n$bj\n [" . $xm . "] 童鞋\n" . "今天是 星 期 ";
 echo $dayinfo .= day($date) . "\n\n";
 
 $where = "WHERE  `gdpukb_name` LIKE  '$bj'";

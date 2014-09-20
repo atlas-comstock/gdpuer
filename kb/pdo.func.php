@@ -29,7 +29,7 @@ function pdo($newinstance = false) {
 			include 'PDO.class.php';
 			$dbclass = 'PDO';
 		}
-		$db = new $dbclass($dsn, 'gdpuer', 'ourstudio', $options);
+		$db = new $dbclass($dsn, 'root', 'root', $options);
 		$sql = "SET NAMES 'utf8';";
 		$db->exec($sql);
 		$db->exec("SET sql_mode='';");
