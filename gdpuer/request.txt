@@ -1,7 +1,0 @@
-<xml><ToUserName><![CDATA[gh_b3b5daa92999]]></ToUserName>
-<FromUserName><![CDATA[oqrX-jhsZGZehLCfrvJPH3_nBf7M]]></FromUserName>
-<CreateTime>1410854344</CreateTime>
-<MsgType><![CDATA[text]]></MsgType>
-<Content><![CDATA[成绩#1310502243#1310502243]]></Content>
-<MsgId>6059573267101276985</MsgId>
-</xml>
