@@ -6,7 +6,7 @@ include("dom.php");
 $xh = $_REQUEST['xh'];
 $pw = $_REQUEST['pw'];
 /*
-if(isset($_REQUEST['xh'])&&isset($_REQUEST['pw'])){
+   if(isset($_REQUEST['xh'])&&isset($_REQUEST['pw'])){
 //$ret=write_personinfo($xh,$pw);
 //提交账号和密码，身份模拟登陆
 $inf=write_personinfo($_REQUEST['xh'],$_REQUEST['pw']);
@@ -31,9 +31,9 @@ curl_close($ch);//提取成功之后的ASP.NetSessionId的cookies
 //读取操作页面
 
 /*
-$geturl_xsxx = 'http://10.50.17.1/xsxx.aspx?xh='.$xh;//个人信息页面
-$geturl_xscj = 'http://10.50.17.1/xscj.aspx?xh='.$xh;//学生成绩页面
-           */
+   $geturl_xsxx = 'http://10.50.17.1/xsxx.aspx?xh='.$xh;//个人信息页面
+   $geturl_xscj = 'http://10.50.17.1/xscj.aspx?xh='.$xh;//学生成绩页面
+ */
 
 $geturl_xscj = 'http://10.50.17.1/xscj.aspx?xh='.$xh;
 
@@ -48,39 +48,39 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch,CURLOPT_HTTPHEADER,$header);
 curl_setopt($ch, CURLOPT_HEADER, 0);
 
- $string = curl_exec($ch);//输出内容
+$string = curl_exec($ch);//输出内容
 $string=get_utf8_string($string);//转成utf8
 
-    $html = new simple_html_dom();
-    $html->load($string);
-    $table=$html->find('table[id=DataGrid1]',0);
-    $text=$table->outertext;
-	echo $text;
-	
-	$html2 = new simple_html_dom();
-    $html2->load($string);
-    $table2=$html2->find('table[id=Table1]',0);
-    $text2=$table2->outertext;
-	echo $text2;
+$html = new simple_html_dom();
+$html->load($string);
+$table=$html->find('table[id=DataGrid1]',0);
+$text=$table->outertext;
+echo $text;
+
+$html2 = new simple_html_dom();
+$html2->load($string);
+$table2=$html2->find('table[id=Table1]',0);
+$text2=$table2->outertext;
+echo $text2;
 
 
 /*}
-}*/
+  }*/
 
 
 
-function get_utf8_string($content) 
-	{    	  
-		$encoding = mb_detect_encoding($content, array('ASCII','UTF-8','GB2312','GBK','BIG5'));  
-		return  mb_convert_encoding($content, 'utf-8', $encoding);
-	}
-function write_personinfo($xh,$pw) 
-	{    	  
-		$per_info_url='http://ours.123nat.com:59832/api/chengji/personinfo.php?xh='.$xh.'&pw='.$pw;
-		$ret_personinfo=file_get_contents($per_info_url);
-		return $ret_personinfo;
-		
-	}
+function get_utf8_string($content)
+{
+    $encoding = mb_detect_encoding($content, array('ASCII','UTF-8','GB2312','GBK','BIG5'));
+    return  mb_convert_encoding($content, 'utf-8', $encoding);
+}
+function write_personinfo($xh,$pw)
+{
+    $per_info_url='http://ours.123nat.com:59832/helper/api/chengji/personinfo.php?xh='.$xh.'&pw='.$pw;
+    $ret_personinfo=file_get_contents($per_info_url);
+    return $ret_personinfo;
+
+}
 
 
 ?>
