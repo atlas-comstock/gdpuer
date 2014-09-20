@@ -60,7 +60,7 @@ po_xuanxiu($xh,$ch,$name,$str,$link);
 
 	function po_xuanxiu($xh,$ch,$name,$str,$link) 
 	{   
-				$str=str_replace("<tr>  		<td>","【",$str);
+		$str=str_replace("<tr>  		<td>","【",$str);
 		$str=str_replace('<tr bgcolor="#EEF3F9">  		<td>',"【",$str);
 		$str=str_replace('</td>  	</tr>',"】",$str);
 		$str=str_replace('</td><td>',"#",$str);
