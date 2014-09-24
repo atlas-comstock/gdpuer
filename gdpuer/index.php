@@ -459,6 +459,18 @@ function reply_main($request, $w)
                 }
             }
 
+        	else if(strstr($content,"天气")||$content=="t"||$content=="T"){
+                // 还未将 T 或 t 写入菜单说明中
+
+                $date = explode("#", $content);
+                $key = $date[1];
+                if ($key=='') {
+                    $content="发送格式:天气#城市\n即可查询天气预报";
+                }else{
+                    $content=$o->get_ours_weather($key);
+                }
+            }
+            
             else if(strstr($content,"找找帮")||$content="8"){
                 $text=str_replace('找找帮','',$content);
                 $content=$o->send_ours_zzbon($text,$from);

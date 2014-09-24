@@ -152,6 +152,64 @@ class WebAPI{
 		$encoding = mb_detect_encoding($content, array('ASCII','UTF-8','GB2312','GBK','BIG5'));  
 		return  mb_convert_encoding($content, 'utf-8', $encoding);
 	}
+	//天气预报
+	public function get_ours_weather($key)    
+	{  
+        $content = iconv("utf-8","gb2312//IGNORE",$n);
+			$con=urlencode($content);
+			$urlweather='http://php.weather.sina.com.cn/xml.php?city='.$con.'&password=DJOYnieT8234jlsK&day=1';
+			 echo $urlweather;
+			      $xmlweather=new DOMDocument();
+			        $xmlweather->load($urlweather);
+			
+			
+			            $allweather=$xmlweather->getElementsByTagName("Weather");
+			            $wea1=$allweather->item(0);
+			         
+			            
+			             function getNodeVal($MyNode,$tagName){
+			                    return $MyNode->getElementsByTagName($tagName)->item(0)->nodeValue;
+			                }
+			                
+					$city=getNodeVal($wea1,"city");//0  数字为数组序号
+					$time=getNodeVal($wea1,"savedate_weather");//时间点 1
+					$day=getNodeVal($wea1,"status1");//白天天气 2
+					$night=getNodeVal($wea1,"status2");//晚上天气 3
+					$direction1=getNodeVal($wea1,"direction1");//白天风向 4
+					$direction2=getNodeVal($wea1,"direction2");//晚上风向 5
+					$power1=getNodeVal($wea1,"power1");//白天风力等级 6
+					$power2=getNodeVal($wea1,"power2");//晚上风力等级 7
+					$temperature1=getNodeVal($wea1,"temperature1");//白天温度 8
+					$temperature2=getNodeVal($wea1,"temperature2");//晚上温度 9
+					//生活指数
+					$chy_l=getNodeVal($wea1,"chy_l");//穿衣指数 薄短袖类 10
+					$chy_shuoming=getNodeVal($wea1,"chy_shuoming");//穿衣建议 11
+					$gm_l=getNodeVal($wea1,"gm_l");//感冒指数 12
+					$gm_s=getNodeVal($wea1,"gm_s");//预防建议 13
+					$pollution_l=getNodeVal($wea1,"pollution_l");//污染指数  14
+					$pollution_s=getNodeVal($wea1,"pollution_s");//天气条件对污染物扩散的影响 15
+					
+					$ssd_l=getNodeVal($wea1,"ssd_l");//体感度指数 16
+					$ssd_s=getNodeVal($wea1,"ssd_s");//体感度指数说明 17
+					$zwx_l=getNodeVal($wea1,"zwx_l");//紫外线指数 18
+					$zwx_s=getNodeVal($wea1,"zwx_s");//紫外线指数说明 19
+					$ktk_l=getNodeVal($wea1,"ktk_l");//空调指数 20
+					$ktk_s=getNodeVal($wea1,"ktk_l");//空调指数说明 21
+					$xcz_l=getNodeVal($wea1,"xcz_l");//洗车指数 22
+					$xcz_s=getNodeVal($wea1,"xcz_s");//洗车指数说明 23
+					$yd_l=getNodeVal($wea1,"yd_l");//运动指数 24
+					$yd_s=getNodeVal($wea1,"yd_s");//运动指数 25
+					//揭阳天气 多云到阴天
+					//echo $ssd_l;
+					/* $explains=$basic1->getElementsByTagName("explains");
+					                $ex1=$explains->item(0);
+					                $exp=getNodeVal($ex1,"ex");  */
+					 $data=array($city,$time,$day,$night,$direction1,$direction2,$power1,$power2,$temperature1,$temperature2,$chy_l,$chy_shuoming,$gm_l,$gm_s,
+					                               $pollution_l,$pollution_s,$ssd_l,$ssd_s,$zwx_l,$zwx_s,$ktk_l,$ktk_s,$xcz_l,$xcz_s,$yd_l,$yd_s);
+							 $result = "【".$str_key."天气预报】\n".$data[1]."天气情况"."\n白天天气：".$data[2]."\n"."夜晚天气：".$data[3]."\n白天温度： ".$data[8]."℃\n夜晚温度：".$data[9]."℃\n"."【生活指数】：\n穿衣指数：".$data[10]."\n穿衣建议： ".$data[11]."\n空气污染指数：".$data[14]."\n紫外线指数：".$data[18]."\n紫外线指数说明： ".$data[19]."\n";
+              
+					                   return $result ;
+	}
 
 }
 ?>
