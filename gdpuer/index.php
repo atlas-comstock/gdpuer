@@ -98,37 +98,37 @@ function reply_main($request, $w)
 
     //开户指南
     if(strstr($content, '开')){
-    	$url = 'http://mp.weixin.qq.com/s?__biz=MjM5OTA1NzMyMg==&mid=201721356&idx=1&sn=2ab0f94f0514fc6d01b5addc76caf446&scene=4#wechat_redirect';
-    	$content = '#title|开户@title|开户指南入口'.'#url|'.$url.'#pic';
+        $url = 'http://mp.weixin.qq.com/s?__biz=MjM5OTA1NzMyMg==&mid=201721356&idx=1&sn=2ab0f94f0514fc6d01b5addc76caf446&scene=4#wechat_redirect';
+        $content = '#title|开户@title|开户指南入口'.'#url|'.$url.'#pic';
 
-                if(strstr($content,'pic'))//多图文回复
+        if(strstr($content,'pic'))//多图文回复
+        {
+            $a=array();
+            $b=array();
+            $c=array();
+            $n=0;
+            $contents = $content;
+            foreach (explode('@t',$content) as $b[$n])
+            {
+                if(strstr($contents,'@t'))
                 {
-                    $a=array();
-                    $b=array();
-                    $c=array();
-                    $n=0;
-                    $contents = $content;
-                    foreach (explode('@t',$content) as $b[$n])
-                    {
-                        if(strstr($contents,'@t'))
-                        {
-                            $b[$n] = str_replace("itle","title",$b[$n]);
-                            $b[$n] = str_replace("ttitle","title",$b[$n]);
-                        }
-
-                        foreach (explode('#',$b[$n]) as $content)
-                        {
-                            list($k,$v)=explode('|',$content);
-                            $a[$k]=$v;
-                            $d.= $k;
-                        }
-                        $c[$n] = $a;
-                        $n++;
-
-                    }
-                    $content = $c ;
+                    $b[$n] = str_replace("itle","title",$b[$n]);
+                    $b[$n] = str_replace("ttitle","title",$b[$n]);
                 }
-                return $content;
+
+                foreach (explode('#',$b[$n]) as $content)
+                {
+                    list($k,$v)=explode('|',$content);
+                    $a[$k]=$v;
+                    $d.= $k;
+                }
+                $c[$n] = $a;
+                $n++;
+
+            }
+            $content = $c ;
+        }
+        return $content;
     }
 
 
@@ -146,7 +146,8 @@ function reply_main($request, $w)
         //广药外网接口
         else if($content=="1"||$content=="2"||$content=="9"||$content=="3"||$content=="4"||strstr($content,"还书")||strstr($content,"还")||strstr($content,"图书")){$flag="gdpuapi";}
         //网页外部接口
-        else if(strstr($content,"表白")||strstr($content,"绑定")||strstr($content,"cet")||strstr($content,"Cet")||strstr($content,"CET6")||strstr($content,"CET")||strstr($content,"cet4")||strstr($content,"cet6")||strstr($content,"CET4")||strstr($content,"四级")||strstr($content,"六级")||strstr($content,"4级")||strstr($content,"6级")||strstr($content,"手机")||$content=="i"||$content=="I"||strstr($content,"解梦")||$content=="g"||$content=="G"||strstr($content,"身份")||$content=="j"||$content=="J"||strstr($content,"找找帮")||$content=="8"||strstr($content,"音乐")||strstr($content,"视频")||strstr($content,"公交")||$content=="A"||$content=="a"||$content=="B"||$content=="b"||$content=="E"||$content=="e"||strstr($content, "翻译")||$content=="F"||$content=='f'||strstr($content, "快递")){$flag="webapi";}
+        else
+            if(strstr($content,"表白")||strstr($content,"绑定")||strstr($content,"cet")||strstr($content,"Cet")||strstr($content,"CET6")||strstr($content,"CET")||strstr($content,"cet4")||strstr($content,"cet6")||strstr($content,"CET4")||strstr($content,"四级")||strstr($content,"六级")||strstr($content,"4级")||strstr($content,"6级")||strstr($content,"手机")||$content=="i"||$content=="I"||strstr($content,"解梦")||$content=="g"||$content=="G"||strstr($content,"身份")||$content=="j"||$content=="J"||strstr($content,"找找帮")||$content=="8"||strstr($content,"音乐")||strstr($content,"视频")||strstr($content,"公交")||$content=="A"||$content=="a"||$content=="B"||$content=="b"||$content=="E"||$content=="e"||strstr($content,         "翻译")||$content=="F"||$content=='f'||strstr($content, "快递")||strstr($content, "天气")||strstr($content, "t")||strstr($content, "T")){$flag="webapi";}
 
         //成绩查询
         else if(strstr($content,"成绩")||$content=="10"){
@@ -155,7 +156,7 @@ function reply_main($request, $w)
             $xh=$ret[1];
             $pw=$ret[2];
             if(($xh)&&($pw)){
-               // $url = 'http://phpdo9.nat123.net:52182/helper/api/jwcapi.php?xh='.$xh.'&pw='.$pw.'&flag=2';
+                // $url = 'http://phpdo9.nat123.net:52182/helper/api/jwcapi.php?xh='.$xh.'&pw='.$pw.'&flag=2';
                 $url='http://av.jejeso.com/helper/api/get_chengji.php?xh='.$xh.'&pw='.$pw;
                 //2014 09 15 $content = file_get_contents($url);
                 //			$content = explode("2014学年",$content);
@@ -220,7 +221,8 @@ function reply_main($request, $w)
                 }
             }
             if(($xh)&&($pw)){
-                $url = 'http://phpdo9.nat123.net:52182/helper/kb/kb.php?xh='.$xh.'&pw='.$pw.'&day='.$day;	
+                $url = 'http://ours.123nat.com:59832/helper/kb/kb.php?xh='.$xh.'&pw='.$pw.'&day='.$day;	
+                    // $url = 'http://phpdo9.nat123.net:52182/helper/kb/kb.php?xh='.$xh.'&pw='.$pw.'&day='.$day;	
                     $content= file_get_contents($url);
             }elseif((!$xh)||(!$pw)){
                 // $content="【现已支持所有校区】\n按照以下格式获取课表\n\n【今天课表】\n课表#学号#密码\n\n【周X课表】\n课表#学号#密码#X\n\n(X为1-5,或者是all，否则均默认为当天，周六、日显示全部课表)\n\n【例如】\n获取今天课表：\n课表#1207511199#1207511199\n\n获取周1课表：\n课表#1207511199#1207511199#1\n\n获取全部课表：\n课表#1207511199#1207511199#all";
@@ -240,7 +242,8 @@ function reply_main($request, $w)
             $xh=$ret[1];
             $pw=$ret[2];
             if(($xh)&&($pw)){
-                $url = 'http://phpdo9.nat123.net:52182/helper/jwc/wx.xuanxiu.api.php?xh='.$xh.'&pw='.$pw;
+                //$url = 'http://phpdo9.nat123.net:52182/helper/jwc/wx.xuanxiu.api.php?xh='.$xh.'&pw='.$pw;
+                $url = 'http://ours.123nat.com:59832/helper/jwc/wx.xuanxiu.api.php?xh='.$xh.'&pw='.$pw;
                 $content= file_get_contents($url);
             }elseif((!$xh)||(!$pw)){
                 $content="请确认【格式】是否正确\n\n选修#学号#密码";
@@ -283,7 +286,34 @@ function reply_main($request, $w)
 
         else if(strstr($content,"建议") || strstr($content,"意见") || strstr($content,"投诉")){
             // $content = "请打开网站：<a>http://av.jejeso.com/helper/api/add_advices/commit.html</a>，进去提建议，谢谢：）";
-            $content = "http://av.jejeso.com/helper/api/add_advices/commit.html\n复制网址到您的浏览器中\n即可建议\n感谢您宝贵的建议:）";
+            $content = "#title|有奖征集意见@title|填写意见点此进入.感谢您的建议#url|http://av.jejeso.com/helper/api/add_advices/commit.html#pic";
+            if(strstr($content,'pic'))//多图文回复
+            {
+                $a=array();
+                $b=array();
+                $c=array();
+                $n=0;
+                $contents = $content;
+                foreach (explode('@t',$content) as $b[$n])
+                {
+                    if(strstr($contents,'@t'))
+                    {
+                        $b[$n] = str_replace("itle","title",$b[$n]);
+                        $b[$n] = str_replace("ttitle","title",$b[$n]);
+                    }
+
+                    foreach (explode('#',$b[$n]) as $content)
+                    {
+                        list($k,$v)=explode('|',$content);
+                        $a[$k]=$v;
+                        $d.= $k;
+                    }
+                    $c[$n] = $a;
+                    $n++;
+
+                }
+                $content = $c ;
+            }
             return $content;
         }
 
@@ -297,7 +327,7 @@ function reply_main($request, $w)
             // $url = 'http://zlgc.gdpu.edu.cn/gdpuer/api.php?flag='.$flag.'&content='.$content;		
             //     $content= file_get_contents($url);
             if($flag=="6"){$content = "查询接口http://www.gzekt.com";}
-            
+
         }
         //通过广药外网网接口获得返回内容
         else if($flag=="gdpuapi"){
@@ -321,7 +351,7 @@ function reply_main($request, $w)
                 $xh = $array[1];
                 if($xh==''){$content = "查询正确格式为:\n还书#学号";}
                 else{
-                   // $keyword=str_replace("还书","",$content);
+                    // $keyword=str_replace("还书","",$content);
                     // $content=$g->get_lib_boorowbook($keyword);
                     $content=$g->get_lib_boorowbook($xh);
                 }
@@ -345,8 +375,8 @@ function reply_main($request, $w)
                     if($zkzh && $xm){
                         $url = 'http://av.jejeso.com/helper/chengji/cet_wx.php?zkzh='.$zkzh.'&xm='.$xm;
                         $content= file_get_contents($url);
-                    if ($content=="")
-                        $content="无法查找到你的成绩，请检查学号、姓名是否正确\n";
+                        if ($content=="")
+                            $content="无法查找到你的成绩，请检查学号、姓名是否正确\n";
                         return $content;
                         //  $content="请确认信息全部正确，比如名字一定要全称，不能简写。收到最新消息称要到9点各网站才开通查询4，6级成绩";
                     }
@@ -419,7 +449,7 @@ function reply_main($request, $w)
                     $content=$o->get_bus($city,$no);
                 }
             }
-            
+
             else if(strstr($content,"翻译")||$content=="E"||$content=="e"){
                 $date = explode("#", $content);
                 $key = $date[1];
@@ -429,12 +459,24 @@ function reply_main($request, $w)
                     $content = $o->enTozh($key);
                 }
             }
-            
+
+        	else if(strstr($content,"天气")||$content=="t"||$content=="T"){
+                // 还未将 T 或 t 写入菜单说明中
+
+                $date = explode("#", $content);
+                $key = $date[1];
+                if ($key=='') {
+                    $content="发送格式:天气#城市\n即可查询天气预报";
+                }else{
+                    $content=$o->get_ours_weather($key);
+                }
+            }
+
             else if(strstr($content,"找找帮")||$content="8"){
                 $text=str_replace('找找帮','',$content);
                 $content=$o->send_ours_zzbon($text,$from);
             }
-            
+
             else if(strstr($content,"音乐")){
                 $content=$o->get_song_tencent($content);
                 $content=mb_convert_encoding($content, 'utf-8', 'gbk');

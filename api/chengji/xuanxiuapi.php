@@ -12,10 +12,10 @@ $pw = $_REQUEST['pw'];
 if(isset($_REQUEST['xh'])&&isset($_REQUEST['pw'])){
 //$ret=write_personinfo($xh,$pw);
 //提交账号和密码，身份模拟登陆
-$info=write_personinfo($_REQUEST['xh'],$_REQUEST['pw']);
-if($info=="获取失败..."){
-echo '<script>$.fancybox("请确认用户名或密码是否正确"); setTimeout("$.fancybox.close()",4000); </script><script>ShowMessage("获取失败...请检查你的用户名或密码是否正确","#FFCCCC")</script>';
-}else{
+// $info=write_personinfo($_REQUEST['xh'],$_REQUEST['pw']);
+// if($info=="获取失败..."){
+// echo '<script>$.fancybox("请确认用户名或密码是否正确"); setTimeout("$.fancybox.close()",4000); </script><script>ShowMessage("获取失败...请检查你的用户名或密码是否正确","#FFCCCC")</script>';
+// }else{
 $post_fields 	= '__VIEWSTATE=dDwtNjg3Njk1NzQ3O3Q8O2w8aTwxPjs%2BO2w8dDw7bDxpPDg%2BO2k8MTM%2BO2k8MTU%2BOz47bDx0PHA8O3A8bDxvbmNsaWNrOz47bDx3aW5kb3cuY2xvc2UoKVw7Oz4%2BPjs7Pjt0PHA8bDxWaXNpYmxlOz47bDxvPGY%2BOz4%2BOzs%2BO3Q8cDxsPFZpc2libGU7PjtsPG88Zj47Pj47Oz47Pj47Pj47bDxpbWdETDtpbWdUQzs%2BPvpW9bNHRO98aj%2BzEmn77FHqeOjK&tbYHM='.$xh.'&tbPSW='.$pw.'&ddlSF=%D1%A7%C9%FA&imgDL.x=28&imgDL.y=19';
 $submit_url 	= 'http://10.50.17.2/default3.aspx';//提价页面
 
@@ -62,7 +62,7 @@ $string=get_utf8_string($string);//转成utf8
 
 
 
-}
+// }
 
 }
 
