@@ -146,7 +146,8 @@ function reply_main($request, $w)
         //广药外网接口
         else if($content=="1"||$content=="2"||$content=="9"||$content=="3"||$content=="4"||strstr($content,"还书")||strstr($content,"还")||strstr($content,"图书")){$flag="gdpuapi";}
         //网页外部接口
-        else if(strstr($content,"表白")||strstr($content,"绑定")||strstr($content,"cet")||strstr($content,"Cet")||strstr($content,"CET6")||strstr($content,"CET")||strstr($content,"cet4")||strstr($content,"cet6")||strstr($content,"CET4")||strstr($content,"四级")||strstr($content,"六级")||strstr($content,"4级")||strstr($content,"6级")||strstr($content,"手机")||$content=="i"||$content=="I"||strstr($content,"解梦")||$content=="g"||$content=="G"||strstr($content,"身份")||$content=="j"||$content=="J"||strstr($content,"找找帮")||$content=="8"||strstr($content,"音乐")||strstr($content,"视频")||strstr($content,"公交")||$content=="A"||$content=="a"||$content=="B"||$content=="b"||$content=="E"||$content=="e"||strstr($content, "翻译")||$content=="F"||$content=='f'||strstr($content, "快递")){$flag="webapi";}
+        else
+            if(strstr($content,"表白")||strstr($content,"绑定")||strstr($content,"cet")||strstr($content,"Cet")||strstr($content,"CET6")||strstr($content,"CET")||strstr($content,"cet4")||strstr($content,"cet6")||strstr($content,"CET4")||strstr($content,"四级")||strstr($content,"六级")||strstr($content,"4级")||strstr($content,"6级")||strstr($content,"手机")||$content=="i"||$content=="I"||strstr($content,"解梦")||$content=="g"||$content=="G"||strstr($content,"身份")||$content=="j"||$content=="J"||strstr($content,"找找帮")||$content=="8"||strstr($content,"音乐")||strstr($content,"视频")||strstr($content,"公交")||$content=="A"||$content=="a"||$content=="B"||$content=="b"||$content=="E"||$content=="e"||strstr($content,         "翻译")||$content=="F"||$content=='f'||strstr($content, "快递")||strstr($content, "天气")||strstr($content, "t")||strstr($content, "T")){$flag="webapi";}
 
         //成绩查询
         else if(strstr($content,"成绩")||$content=="10"){
@@ -470,7 +471,7 @@ function reply_main($request, $w)
                     $content=$o->get_ours_weather($key);
                 }
             }
-            
+
             else if(strstr($content,"找找帮")||$content="8"){
                 $text=str_replace('找找帮','',$content);
                 $content=$o->send_ours_zzbon($text,$from);

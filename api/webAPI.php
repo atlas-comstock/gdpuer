@@ -155,7 +155,7 @@ class WebAPI{
 	//天气预报
 	public function get_ours_weather($key)
 	{
-        $content = iconv("utf-8","gb2312//IGNORE",$n);
+        $content = iconv("utf-8","gb2312//IGNORE",$key);
 		$con=urlencode($content);
 		$urlweather='http://php.weather.sina.com.cn/xml.php?city='.$con.'&password=DJOYnieT8234jlsK&day=1';
 		$xmlweather=new DOMDocument();
