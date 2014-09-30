@@ -15,7 +15,7 @@ function pdo($newinstance = false) {
 	global $_W;
 	if($newinstance) {
 		//$dsn = "mysql:dbname=fPbhUckfqXdcQiuSglFR;host=127.0.0.1;port=3306";
-		$dsn = "mysql:dbname=avshop;host=110.75.189.200;port=3306";
+		$dsn = "mysql:dbname=avshop;host=localhost;port=3306";//110.75.189.200
 		$dbclass = '';
 		$options = array();
 		if (class_exists('PDO')) {
