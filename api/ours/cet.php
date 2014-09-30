@@ -29,14 +29,14 @@ if(isset($_GET['zkzh']))
     unset($html);
 	$str = $text;
 	$str=str_replace('<table border="0" align="center" cellpadding="0" cellspacing="6" class="cetTable">  	<tr>  		<th>',"",$str);
-	$str=str_replace('</th>  		<td>',"\t",$str);
+	$str=str_replace('</th>  		<td>',"",$str);
 	$str=str_replace('</td>  	</tr>  	<tr>  		<th>',"\n",$str);
 	$str=str_replace('<strong><span style="color: #F00;">',"",$str);
-	$str=str_replace('</span>',"\t",$str);
+	$str=str_replace('</span>',"",$str);
 	$str=str_replace('&nbsp;&nbsp;',"",$str);
 	$str=str_replace('<span class="color01">',"\n",$str);
 	$str=str_replace('</strong></td>  	</tr>  </table>',"\n\n查询数据来源于学信网\nOURStudio提供技术支持.",$str);
-    //}
+    }
     echo $str;
   }
   else

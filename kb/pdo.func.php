@@ -14,7 +14,8 @@ define('PDO_DEBUG', true);
 function pdo($newinstance = false) {
 	global $_W;
 	if($newinstance) {
-		$dsn = "mysql:dbname=fPbhUckfqXdcQiuSglFR;host=127.0.0.1;port=3306";
+		//$dsn = "mysql:dbname=fPbhUckfqXdcQiuSglFR;host=127.0.0.1;port=3306";
+		$dsn = "mysql:dbname=avshop;host=110.75.189.200;port=3306";
 		$dbclass = '';
 		$options = array();
 		if (class_exists('PDO')) {
@@ -29,7 +30,8 @@ function pdo($newinstance = false) {
 			include 'PDO.class.php';
 			$dbclass = 'PDO';
 		}
-		$db = new $dbclass($dsn, 'root', 'root', $options);
+//		$db = new $dbclass($dsn, 'root', 'root', $options);
+		$db = new $dbclass($dsn, 'christopher', 'wudbadmin', $options);
 		$sql = "SET NAMES 'utf8';";
 		$db->exec($sql);
 		$db->exec("SET sql_mode='';");

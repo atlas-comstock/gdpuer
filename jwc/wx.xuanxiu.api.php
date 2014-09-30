@@ -1,15 +1,15 @@
 ﻿<?php 
 header("Content-type: text/html; charset=utf-8");
-// include("db.php");
+include("db.php");
 
 
 $xh=$_GET['xh'];
 $pw=$_GET['pw'];
-$api_url='http://localhost/helper/api/jwcapi.php?xh='.$xh.'&pw='.$pw.'&flag=3';
+$api_url='http://127.0.0.1/api/jwcapi.php?xh='.$xh.'&pw='.$pw.'&flag=3';
 $str=file_get_contents($api_url);
 
-// $tj='http://pingtcss.qq.com/pingd?dm=yanson.duapp.com&pvi='.rand(1,9999999999).'&si=s'.rand(1,9999999999).'&url=/jwc/wx.xuanxiu.api.php&arg=&ty=&rdm=&rurl=&rarg=&adt=&r2=31957828&r3=-1&r4=1&fl=12.0&scr=1280x960&scl=24-bit&lg=zh-cn&jv=1&tz=-8&ct=&ext=adid=&pf=&random=1397458406451';
-// file_get_contents($tj);
+$tj='http://pingtcss.qq.com/pingd?dm=yanson.duapp.com&pvi='.rand(1,9999999999).'&si=s'.rand(1,9999999999).'&url=/jwc/wx.xuanxiu.api.php&arg=&ty=&rdm=&rurl=&rarg=&adt=&r2=31957828&r3=-1&r4=1&fl=12.0&scr=1280x960&scl=24-bit&lg=zh-cn&jv=1&tz=-8&ct=&ext=adid=&pf=&random=1397458406451';
+file_get_contents($tj);
 if(strstr($str,"<script>")){
 echo "【账号】或【密码】错误";
 return;
@@ -21,7 +21,6 @@ $str=<<<eot
 eot;
 */
 
-/* 2014 09 12
 {//输出名字
 $sql_name = "SELECT * FROM `jwc_personinfo` WHERE `xh` = '{$xh}' LIMIT 1 ";
 $query_char=mysql_query("SET NAMES UTF8");
@@ -32,7 +31,6 @@ $xb=$name_ret[4];
 if($xb=='男'){$ch='师兄';}
 if($xb=='女'){$ch='师姐';}
 }
-
 
 
 {//搜索数据库是否已经有数据
@@ -47,20 +45,18 @@ $title="{$name} {$ch}欢迎使用\n【广药选修查询系统】";
 echo $title."\n\n".$check_ret[2];
 }else{
 echo "亲爱的{$name} {$ch}\n正在为你链接到教务处...\n请重新发送\n\n选修#学号#密码\n\n来获得最新选修信息";
-*/
 po_xuanxiu($xh,$ch,$name,$str,$link);
-// }
+}
 
 
-	function get_utf8_string($content) 
+function get_utf8_string($content) 
 	{    	  
 		$encoding = mb_detect_encoding($content, array('ASCII','UTF-8','GB2312','GBK','BIG5'));  
 		return  mb_convert_encoding($content, 'utf-8', $encoding);
 	}
-
-	function po_xuanxiu($xh,$ch,$name,$str,$link) 
+function po_xuanxiu($xh,$ch,$name,$str,$link) 
 	{   
-		$str=str_replace("<tr>  		<td>","【",$str);
+				$str=str_replace("<tr>  		<td>","【",$str);
 		$str=str_replace('<tr bgcolor="#EEF3F9">  		<td>',"【",$str);
 		$str=str_replace('</td>  	</tr>',"】",$str);
 		$str=str_replace('</td><td>',"#",$str);
@@ -70,22 +66,18 @@ po_xuanxiu($xh,$ch,$name,$str,$link);
 			if($key>=1){
 			$b=explode("#",$a);
 		//$a=str_replace("】","\n",$a);
-			$dy = date("Y");//当前年份
-			$getBy = explode("-", $b[0]);
-			if($dy==$getBy[0])
 			$string .= "学年:".$b[0]."\n".'学期:'.$b[1]."\n".'课程名称:'.$b[4]."\n".'学分:'.$b[5]."\n".'起止周:'.$b[7]."\n".'上课时间:'.$b[8]."\n".'上课地点:'.$b[9]."\n".'教师姓名:'.$b[10]."\n\n";
 			}
 	
 		}
 
-		$title="欢迎使用\n【广药学生选修查询】";
+		$title="{$name} {$ch}欢迎使用\n【广药学生选修查询】";
 		$ret=$string;
-		echo $ret;
-		/*2014 08 12
+
+	
 		$sql_po_chengji = "REPLACE INTO `jwc_xuanxiu` (`xh`, `name`,`xuanxiu`, `time`) VALUES ('{$xh}','{$name}', '{$ret}', TIMESTAMP(10));";
         $query_char=mysql_query("SET NAMES UTF8");
         $query_po_chengji=mysql_query($sql_po_chengji,$link) or die(mysql_error());
-        */
 	}
 	
 
