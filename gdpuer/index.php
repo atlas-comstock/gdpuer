@@ -20,8 +20,9 @@ define("YOURNICK", "广药小助手");
 //在这里定义你的初次关注后的欢迎语和菜单@title|【网站导航】- 点击进入#url|http://ourstudio.duapp.com/menu/gdpuer/website.php#pic
 // define("WELCOME", "description|问候#title|欢迎关注@title|留言：*你的话\t聊天：任意回复#url|#pic@title|绑定：昵称XXX\t菜单：回复 ? 号#url|#pic@title|调教：问X答X \t关于：点击查看#url|http://www.xiaojo.com/myadmin/pages/wx.php?id=1450#pic");
 define("WELCOME", "欢迎关注广药小助手!\n直接回复?或者help即可出现菜单");
-define("MENU","description|菜单#title|功能向导@title|【校园资讯】- 回复数字或提示\n\n[1]广药新闻\t\t[2]就业信息\n[3]图书信息\t\t[4]还书\n[5]动漫更新\t\t[6]网络账号\n[7]查课表\t\t\t\t[8]发找找帮\n[9]勤管兼职\t\t[10]查成绩\n[11]查选修\t\t\t[cet]查四六级\n[开]开户指南\t\t[意见]小助手有奖征集意见#url|#pic@title|【生活服务】- 回复字母\n\n[A]听歌\t[B]公交\t[C]翻译\t[D]快递\n[E]解梦\t[F]手机\t[G]身份\t[H]音乐\n[T]天气#url|#pic@title|留言：*你的话\t聊天：任意回复#url|#pic@title|绑定：昵称XXX\t调教：问X答X#url|#pic");
-define("TEXT","【校园资讯-回复数字或提示】\n[1]广药新闻\t[2]就业信息\n[3]图书信息\t[cet]查四六级\n[5]动漫更新\t[6]网络账户\n[7]查课表\t[8]发找找帮\n[9]勤管兼职\t[10]查成绩\n[11]查选修\t[开]开户指南\n\n【生活服务-回复字母】\n[A]听歌\t[B]公交\t[C]翻译\t[D]快递\n[E]解梦\t[F]手机\t[G]身份\t[H]音乐\t\n[T]天气\n聊天： 任意回复\n留言： *+你的话\n绑定： 昵称XXX\n调教： 问XX答XX");
+define("MENU","description|菜单#title|功能向导@title|【校园资讯】- 回复数字或提示\n\n[1]广药新闻\t\t[2]就业信息\n[3]图书信息\t\t[4]还书\n[5]动漫更新\t\t[6]网络账号\n[7]查课表\t\t\t\t[8]发找找帮\n[9]勤管兼职\t\t[10]查成绩\n[11]查选修\t\t\t[cet]查四六级\n[开]开户指南\t\t[意见]小助手有奖征集意见#url|#pic@title|【生活服务】-
+回复字母\n\n[A]听歌\t[B]公交\t[C]翻译\t[D]快递\n[E]解梦\t[F]手机\t[G]身份\t[H]音乐\n[T]天气#url|#pic@title|留言：*你的话\t聊天：任意回复#url|#pic@title|绑定：昵称XXX\t上不了校园网？回复：校园网故障查询 或者 保障 或者 114.w#url|#pic");
+define("TEXT","【校园资讯-回复数字或提示】\n[1]广药新闻\t[2]就业信息\n[3]图书信息\t[cet]查四六级\n[5]动漫更新\t[6]网络账户\n[7]查课表\t[8]发找找帮\n[9]勤管兼职\t[10]查成绩\n[11]查选修\t[开]开户指南\n\n【生活服务-回复字母】\n[A]听歌\t[B]公交\t[C]翻译\t[D]快递\n[E]解梦\t[F]手机\t[G]身份\t[H]音乐\t\n[T]天气\n聊天： 任意回复\n留言： *+你的话\n绑定： 昵称XXX\n上不了校园网？回复：校园网故障查询 或者 保障 或者 114.w");
 //星标标识，默认为* ,用户对话里包含此标识则设置为星标，用于留言
 define("FLAG", "*");
 //这里为你的私有库账号
