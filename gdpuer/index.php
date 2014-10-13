@@ -317,8 +317,41 @@ function reply_main($request, $w)
             return $content;
         }
 
+        else if(strstr($content,"保障") || strstr($content,"上不了网") || strstr($content,"校园网常见错误")|| strstr($content,"114.w")){
+            $content = "#title|校园网常见错误,请打开： #url|http://av.jejeso.com/Ours/911/index.php#pic";
+            if(strstr($content,'pic'))//多图文回复
+            {
+                $a=array();
+                $b=array();
+                $c=array();
+                $n=0;
+                $contents = $content;
+                foreach (explode('@t',$content) as $b[$n])
+                {
+                    if(strstr($contents,'@t'))
+                    {
+                        $b[$n] = str_replace("itle","title",$b[$n]);
+                        $b[$n] = str_replace("ttitle","title",$b[$n]);
+                    }
+
+                    foreach (explode('#',$b[$n]) as $content)
+                    {
+                        list($k,$v)=explode('|',$content);
+                        $a[$k]=$v;
+                        $d.= $k;
+                    }
+                    $c[$n] = $a;
+                    $n++;
+
+                }
+                $content = $c ;
+            }
+            return $content;
+        }
+
+
         //menu内容
-        if($flag=="menu" || strstr($content,"查询")){$content=MENU;}  
+        if($flag=="menu" || strstr($content,"查询")){$content=MENU;}
         //menu内容
         else if($flag=="text"){$content=TEXT;}
         //通过广药内网接口获得返回内容
