@@ -10,6 +10,7 @@
 header ( "content-Type: text/html; charset=utf-8" );
 require_once (dirname ( __FILE__ ) . "/wechat.php");
 require_once ("../api/webAPI.php");
+require_once ("../api/user.php");
 define ( "DEBUG", true );
 
 // 下面为需要配置的选项
@@ -108,8 +109,6 @@ function reply_main($request, $w) {
         // 广药内网接口
         if ($content == "?" || $content == '？' || $content == 'help') {
             $flag = 'menu';
-        } else if (strstr ( $content, "绑定" )) {
-            return $reply_content = "【管理员回复】\n\n绑定以及相关功能目前还在内测，还没有接入到本平台，可以加微信号doctoryanson(Y博士)或者gdpucafe(广药淅水咖啡厅)进行测试>>>\n\n有菜单版本更加方便快捷<a href=\"weixin://contacts/profile/gh_a450baf872ec\">点击关注</a>";
         } else if ($content == "菜单" || $content == '帮助' || $content == "列表" || $content == '清单' || $content == '功能') {
             $flag = "text";
         } else if (strstr ( $content, "网号" ) || $content == "6") {
@@ -118,32 +117,92 @@ function reply_main($request, $w) {
         else if ($content == "1" || $content == "2" || $content == "9" || $content == "3" || $content == "4" || strstr ( $content, "还书" ) || strstr ( $content, "还" ) || strstr ( $content, "图书" )) {
             $flag = "gdpuapi";
         }       // 网页外部接口
-        else if (strstr ( $content, "表白" ) || strstr ( $content, "绑定" ) || strstr ( $content, "cet" ) || strstr ( $content, "Cet" ) || strstr ( $content, "CET6" ) || strstr ( $content, "CET" ) || strstr ( $content, "cet4" ) || strstr ( $content, "cet6" ) || strstr ( $content, "CET4" ) || strstr ( $content, "四级" ) || strstr ( $content, "六级" ) || strstr ( $content, "4级" ) || strstr ( $content, "6级" ) || strstr ( $content, "手机" ) || $content == "f" || $content == "F" || strstr ( $content, "解梦" ) || $content == "e" || $content == "E" || strstr ( $content, "身份" ) || $content == "G" || $content == "g" || strstr ( $content, "找找帮" ) || $content == "8" || strstr ( $content, "音乐" ) || strstr ( $content, "视频" ) || strstr ( $content, "公交" ) || $content == "A" || $content == "a" || $content == "B" || $content == "b" || $content == "C" || $content == "c" || strstr ( $content, "翻译" ) || $content == "D" || $content == 'd' || strstr ( $content, "快递" ) || strstr ( $content, "天气" ) || strstr ( $content, "t" ) || strstr ( $content, "T" )) {
+        else if (strstr ( $content, "表白" ) || strstr ( $content, "cet" ) || strstr ( $content, "Cet" ) || strstr ( $content, "CET6" ) || strstr ( $content, "CET" ) || strstr ( $content, "cet4" ) || strstr ( $content, "cet6" ) || strstr ( $content, "CET4" ) || strstr ( $content, "四级" ) || strstr ( $content, "六级" ) || strstr ( $content, "4级" ) || strstr ( $content, "6级" ) || strstr ( $content, "手机" ) || $content == "f" || $content == "F" || strstr ( $content, "解梦" ) || $content == "e" || $content == "E" || strstr ( $content, "身份" ) || $content == "G" || $content == "g" || strstr ( $content, "找找帮" ) || $content == "8" || strstr ( $content, "音乐" ) || strstr ( $content, "视频" ) || strstr ( $content, "公交" ) || $content == "A" || $content == "a" || $content == "B" || $content == "b" || $content == "C" || $content == "c" || strstr ( $content, "翻译" ) || $content == "D" || $content == 'd' || strstr ( $content, "快递" ) || strstr ( $content, "天气" ) || strstr ( $content, "t" ) || strstr ( $content, "T" )) {
             $flag = "webapi";
         }       
 
+        //绑定帐号
+        elseif (strstr ( $content, "绑定" ) ) {
+            //查询用户名
+            $name = $from;
+            $url = "../api/check.php?name=".$name;
+            $reply_content = file_get_contents ($url);
+            if($reply_content != '') {//判断用户是否存在 
+                $reply_content = "用户已绑定";
+            }else {
+                $user = new user;
+                $content = str_replace ( '＃', '#', $content );
+                $ret = explode ( '#', $content );
+                $xh = $ret [1];
+                $pw = $ret [2];
+                if (($xh) && ($pw)) {
+                    $num = $xh;
+                    $pwd = $pw;
+                    $user->blind($name, $num, $pwd);
+                    $reply_content = "绑定成功，以后直接输入成绩即可查成绩，无需再输入学号密码\n";
+                }else{
+                    $reply_content = "请确认【格式】正确\n\n绑定#学号#密码";   
+                }
+                return $reply_content;
+            }
+        }
         // 成绩查询
-        else if (strstr ( $content, "成绩" ) || $content == "10") {
+        elseif (strstr ( $content, "成绩" ) || $content == "10") {
+            $content=str_replace('＃','#',$content);
+            $ret=explode('#',$content);
+            $xh=$ret[1];
+            $pw=$ret[2];
+            if ((!$xh) || (!$pw)) {
+                $name = $from;
+                $user = new user;
+                $xh = $user->get_num($name);
+                $pw = $user->get_pw($name);
+            }
+            if (($xh) && ($pw)) {
+                $url = 'http://av.jejeso.com/helper/api/chengji/get_chengji.php?xh=' . $xh . '&pw=' . $pw;
+                $content = '#title|成绩单@title|亲爱的学霸Orz，这是您的成绩单请笑纳~^_^(单击获取，若页面为空请确认密码学号无误)' . '#url|' . $url . '#pic';
+                $content = replypic($content);
+            }  else {
+                $reply_content = "帐号或密码错误，请输入“重新绑定”重新绑定帐号和密码。\n或者按格式#学号#密码  查询";
+            }
+            return $content;
+        }
+        // 选修查询
+        elseif ($content == "11" || strstr ( $content, "选修" )) {
+            $content=str_replace('＃','#',$content);
+            $ret=explode('#',$content);
+            $xh=$ret[1];
+            $pw=$ret[2];
+            if ((!$xh) || (!$pw)) {
+                $name = $from;
+                $user = new user;
+                $xh = $user->get_num($name);
+                $pw = $user->get_pw($name);
+            }
+            if (($xh) && ($pw)) {
+                $url = 'http://branch2.gdpu.edu.cn/gd/jwc/wx.xuanxiu.api.php?xh=' . $xh . '&pw=' . $pw;
+                $reply_content = file_get_contents ( $url );
+            } else {
+                $reply_content = "帐号或密码错误，请输入“重新绑定”重新绑定帐号和密码。\n或者按格式#学号#密码  查询";
+            }
+            return $reply_content;
+        }
+        //重新绑定
+        elseif (strstr ( $content, "重绑" )) {
+            $name = $from;
+            $user = new user;
             $content = str_replace ( '＃', '#', $content );
             $ret = explode ( '#', $content );
             $xh = $ret [1];
             $pw = $ret [2];
-            if (($xh) && ($pw)) {
-                $url = 'http://av.jejeso.com/helper/api/chengji/get_chengji.php?xh=' . $xh . '&pw=' . $pw;
-                $reply_content = '#title|成绩单@title|亲爱的学霸Orz，这是您的成绩单请笑纳~^_^(单击获取，若页面为空请确认密码学号无误)#url|' . $url . '#pic';
-                
-                if (strstr ( $reply_content, 'pic' ))               // 多图文回复
-                {
-                    $reply_content = replypic ( $reply_content );
-                }
-                return $reply_content;
-            } elseif ((! $xh) || (! $pw)) {
-                $reply_content = "请确认【格式】是否正确\n\n成绩#学号#密码";
-            } else {
-                $reply_content = "请确认格式是否正确\n\n成绩#学号#密码";
+            if ((!$xh) || (!$pw)) {
+                $reply_content = "请确认【格式】正确\n\n重绑#学号#密码";   
+            }else {
+                $user->reblind($name);
+                $reply_content = "重新绑定成功";
             }
             return $reply_content;
-        }       
+        }
 
         // 课表查询
         else if (strstr ( $content, "课表" ) || $content == "7") {
@@ -170,22 +229,7 @@ function reply_main($request, $w) {
             return $reply_content;
         }       
 
-        // 选修查询
-        else if ($content == "11" || strstr ( $content, "选修" )) {
-            $content = str_replace ( '＃', '#', $content );
-            $ret = explode ( '#', $content );
-            $xh = $ret [1];
-            $pw = $ret [2];
-            if (($xh) && ($pw)) {
-                $url = 'http://branch2.gdpu.edu.cn/gd/jwc/wx.xuanxiu.api.php?xh=' . $xh . '&pw=' . $pw;
-                $reply_content = file_get_contents ( $url );
-            } elseif ((! $xh) || (! $pw)) {
-                $reply_content = "请确认【格式】是否正确\n\n选修#学号#密码";
-            } else {
-                $reply_content = "请确认【格式】是否正确\n\n选修#学号#密码";
-            }
-            return $reply_content;
-        } 
+    
 
         //四六级
         else if (strstr ( $content, "cet" ) || strstr ( $content, "Cet" ) || strstr ( $content, "四级" ) || strstr ( $content, "六级" )) {
