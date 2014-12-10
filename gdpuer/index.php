@@ -139,11 +139,11 @@ function reply_main($request, $w) {
                     $num = $xh;
                     $pwd = $pw;
                     $user->blind($name, $num, $pwd);
-                    $reply_content = "绑定成功，以后直接输入成绩即可查成绩，无需再输入学号密码\n";
+                    $content = "绑定成功，以后直接输入成绩即可查成绩，无需再输入学号密码\n";
                 }else{
-                    $reply_content = "请确认【格式】正确\n\n绑定#学号#密码";   
+                    $content = "请确认【格式】正确\n\n绑定#学号#密码";   
                 }
-                return $reply_content;
+                return $content;
             }
         }
         // 成绩查询
@@ -163,7 +163,7 @@ function reply_main($request, $w) {
                 $content = '#title|成绩单@title|亲爱的学霸Orz，这是您的成绩单请笑纳~^_^(单击获取，若页面为空请确认密码学号无误)' . '#url|' . $url . '#pic';
                 $content = replypic($content);
             }  else {
-                $reply_content = "帐号或密码错误，请输入“重新绑定”重新绑定帐号和密码。\n或者按格式#学号#密码  查询";
+                $content = "帐号或密码错误，请输入“重新绑定”重新绑定帐号和密码。\n或者按格式#学号#密码  查询";
             }
             return $content;
         }
@@ -196,12 +196,12 @@ function reply_main($request, $w) {
             $xh = $ret [1];
             $pw = $ret [2];
             if ((!$xh) || (!$pw)) {
-                $reply_content = "请确认【格式】正确\n\n重绑#学号#密码";   
+                $content = "请确认【格式】正确\n\n重绑#学号#密码";   
             }else {
-                $user->reblind($name);
-                $reply_content = "重新绑定成功";
+                $user->reblind($name, $xh, $pw);
+                $content = "重新绑定成功";
             }
-            return $reply_content;
+            return $content;
         }
 
         // 课表查询
@@ -210,14 +210,23 @@ function reply_main($request, $w) {
             $ret = explode ( '#', $content );
             $xh = $ret [1];
             $pw = $ret [2];
-            $day = date ( "w" );
-            if (isset ( $ret [3] )) {
-                if (($ret [3] >= 1) && ($ret [3] <= 5)) {
-                    $day = $ret [3];
-                }
-			else
-                    $day = 1;
+            $day = date("w");
+            if ((!$xh) || (!$pw)) {
+                $name = $from;
+                $user = new user;
+                $xh = $user->get_num($name);
+                $pw = $user->get_pw($name);
+                if($ret [1])
+                    $day = $ret [1];
             }
+            if (isset($ret[3])) {
+                if (($ret[3] >= 1) && ($ret[3] <= 5)) {
+                    $day = $ret[3];
+                }
+            }
+//			else
+//                    $day = 1;
+//            }
             if (($xh) && ($pw)) {
                 $url = 'http://av.jejeso.com/helper/kb/kb.php?xh=' . $xh . '&pw=' . $pw . '&day=' . $day;
                 $reply_content = file_get_contents ( $url );
@@ -227,9 +236,7 @@ function reply_main($request, $w) {
                 $reply_content = "【现已支持所有校区】\n按照以下格式获取课表\n\n【今天课表】\n课表#学号#密码\n\n【周X课表】\n课表#学号#密码#X\n\n(X为1-5,或者是all，否则均默认为当天，周六、日显示全部课表)\n\n【例如】\n获取今天课表：\n课表#1207511199#1207511199\n\n获取周1课表：\n课表#1207511199#1207511199#1";
             }
             return $reply_content;
-        }       
-
-    
+        }
 
         //四六级
         else if (strstr ( $content, "cet" ) || strstr ( $content, "Cet" ) || strstr ( $content, "四级" ) || strstr ( $content, "六级" )) {
@@ -331,6 +338,12 @@ function reply_main($request, $w) {
             else if ($content == "4" || strstr ( $content, "还" )) {
                 $array = explode ( "#", $content );
                 $xh = $array [1];
+                if ((!$xh)) {
+                    $name = $from;
+                    $user = new user;
+                    $xh = $user->get_num($name);
+                }
+
                 if ($xh == '') {
                     $reply_content = "查询正确格式为:\n还书#学号";
                 } else {
@@ -344,7 +357,7 @@ function reply_main($request, $w) {
         // 通过外部接口获得返回内容
         else if ($flag == "webapi") {
             $o = new WebAPI ();
-            
+
             //四六级
             if ($content == "4" || strstr ( $content, "cet" ) || strstr ( $content, "Cet" ) || strstr ( $content, "四级" ) || strstr ( $content, "六级" )) {
                 if ($content == "4" || strstr ( $content, "cet" ) || strstr ( $content, "Cet" ) || strstr ( $content, "四级" ) || strstr ( $content, "六级" )) {
