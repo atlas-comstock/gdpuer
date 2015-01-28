@@ -19,8 +19,8 @@ define ( "TOKEN", "gdpuer" );
 define ( "YOURNICK", "广药小助手" );
 // 在这里定义你的初次关注后的欢迎语和菜单@title|【网站导航】-
 define ( "WELCOME", "欢迎关注广药小助手!\n直接回复?或者help即可出现菜单" );
-define ( "MENU", "description|菜单#title|功能向导@title|【校园资讯】- 回复数字或提示\n\n[1]广药新闻\t\t[2]就业信息\n[3]图书信息\t\t[4]还书\n[5]动漫更新\t\t[6]网络账号\n[7]查课表\t\t\t\t[8]发找找帮\n[9]勤管兼职\t\t[10]查成绩\n[11]查选修\t\t\t[cet]查四六级\n[开]开户指南\t\t[意见]给小助手提意见#url|#pic@title|【生活服务】-回复字母\n\n[A]听歌\t[B]公交\t[C]翻译\t[D]快递\n[E]解梦\t[F]手机\t[G]身份\t[H]音乐\n[T]天气#url|#pic@title|\t聊天：任意回复\t\t提意见？回复意见#url|#pic@title|合作事宜：回复 合作 或 推送#url|#pic@title|上不了校园网？网络有故障?\n点击进入查询故障解决方案==>>#url|http://av.jejeso.com/Ours/911/index.php#pic@title| CopyRight By OURStudio#url|#pic" );
-define ( "TEXT", "【校园资讯-回复数字或提示】\n[1]广药新闻\t[2]就业信息\n[3]图书信息\t[cet]查四六级\n[5]动漫更新\t[6]网络账户\n[7]查课表\t[8]发找找帮\n[9]勤管兼职\t[10]查成绩\n[11]查选修\t[开]开户指南\n\n【生活服务-回复字母】\n[A]听歌\t[B]公交\t[C]翻译\t[D]快递\n[E]解梦\t[F]手机\t[G]身份\t[H]音乐\t\n[T]天气\n聊天： 任意回复\t\t提意见？回复意见\n\n上不了校园网？回复：校园网故障查询 或者 报障 或者 114.w\n\n合作事宜： 回复 合作 或 推送" );
+define ( "MENU", "description|菜单#title|功能向导@title|【校园资讯】- 回复数字或提示\n\n[1]广药新闻\t\t[2]就业信息\n[3]图书信息\t\t[4]还书\n[5]动漫更新\t\t[6]交通卡余额\n[7]查课表\t\t\t\t[8]发找找帮\n[9]勤管兼职\t\t[10]查成绩\n[11]查选修\t\t\t[cet]查四六级\n[开]开户指南\t[意见]给小助手提意见\n[绑定]绑定学号密码#url|#pic@title|【生活服务】-回复字母\n\n[A]听歌\t[B]公交\t[C]翻译\t[D]快递\n[E]解梦\t[F]手机\t[G]身份\t[H]音乐\n[T]天气#url|#pic@title|\t聊天：任意回复\t\t提意见？回复意见#url|#pic@title|合作事宜：回复 合作 或 推送#url|#pic@title|上不了校园网？网络有故障?\n点击进入查询故障解决方案==>>#url|http://av.jejeso.com/Ours/911/index.php#pic@title| CopyRight By OURStudio#url|#pic" );
+define ( "TEXT", "【校园资讯-回复数字或提示】\n[1]广药新闻\t[2]就业信息\n[3]图书信息\t[cet]查四六级\n[5]动漫更新\t[6]交通卡余额\n[7]查课表\t[8]发找找帮\n[9]勤管兼职\t[10]查成绩\n[11]查选修\t[开]开户指南\n\n【生活服务-回复字母】\n[A]听歌\t[B]公交\t[C]翻译\t[D]快递\n[E]解梦\t[F]手机\t[G]身份\t[H]音乐\t\n[T]天气\n聊天： 任意回复\t\t提意见？回复意见\n\n上不了校园网？回复：校园网故障查询 或者 报障 或者 114.w\n\n合作事宜： 回复 合作 或 推送" );
 // 星标标识，默认为* ,用户对话里包含此标识则设置为星标，用于留言
 define ( "FLAG", "*" );
 // 这里为你的私有库账号
@@ -102,6 +102,29 @@ function reply_main($request, $w) {
         }
         return $reply_content;
     }
+
+    if ($content=='校历') {
+    	$reply_content="#title|广药2014-2015第一学期校历@title|查看校历点此进入#url|http://mp.weixin.qq.com/s?__biz=MjM5OTA1NzMyMg==&mid=202787753&idx=1&sn=c37f9e9566bf0dcd016d685c12bc3baa#rd#pic";
+    	$reply_content = replypic($reply_content);
+    	return $reply_content;
+    }
+
+    //交通卡查询
+    if (strstr($content,'交')||strstr($content, '羊')||$content == "6") {
+    	$arr = explode('#', $content);
+    	$ctype = $arr[1];
+    	$cno = $arr[2];
+    	if ($ctype=='yct'&&!empty($cno)&&$cno!='') {
+    		return "请到羊城通官方公众号查询 谢谢！";
+    		$url = "http://av.jejeso.com/helper/api/transfer/get_yct.php?cardno=$cno";
+    		return file_get_contents($url);
+    	}elseif ($ctype=='szt'&&!empty($cno)&&$cno!='') {
+    		$url = "http://av.jejeso.com/helper/api/transfer/get_szt.php?cardno=$cno";
+    		return file_get_contents($url);
+    	}else{
+    		return "小助手交通卡余额查询Beta\n\n发送:交通#yct#卡号\n即可查询羊城通余额\n\n发送:交通#szt#卡号\n即可查询深圳通余额^_^\n更多便利将陆续推出";
+    	}
+    }
     
     //content处理
     if (! empty ( $content )) {
@@ -121,31 +144,7 @@ function reply_main($request, $w) {
             $flag = "webapi";
         }       
 
-        //绑定帐号
-        elseif (strstr ( $content, "绑定" ) ) {
-            //查询用户名
-            $name = $from;
-            $url = "../api/check.php?name=".$name;
-            $reply_content = file_get_contents ($url);
-            if($reply_content != '') {//判断用户是否存在 
-                $reply_content = "用户已绑定";
-            }else {
-                $user = new user;
-                $content = str_replace ( '＃', '#', $content );
-                $ret = explode ( '#', $content );
-                $xh = $ret [1];
-                $pw = $ret [2];
-                if (($xh) && ($pw)) {
-                    $num = $xh;
-                    $pwd = $pw;
-                    $user->blind($name, $num, $pwd);
-                    $content = "绑定成功，以后直接输入成绩即可查成绩，无需再输入学号密码\n";
-                }else{
-                    $content = "请确认【格式】正确\n\n绑定#学号#密码";   
-                }
-                return $content;
-            }
-        }
+        
         // 成绩查询
         elseif (strstr ( $content, "成绩" ) || $content == "10") {
             $content=str_replace('＃','#',$content);
@@ -163,8 +162,9 @@ function reply_main($request, $w) {
                 $content = '#title|成绩单@title|亲爱的学霸Orz，这是您的成绩单请笑纳~^_^(单击获取，若页面为空请确认密码学号无误)' . '#url|' . $url . '#pic';
                 $content = replypic($content);
             }  else {
-                $content = "帐号或密码错误，请输入“重新绑定”重新绑定帐号和密码。\n或者按格式#学号#密码  查询";
+                $content = "帐号或密码错误，请输入“重绑”重新绑定帐号和密码。\n或者按格式#学号#密码  查询";
             }
+            // $content = '由于教务处当前不允许查成绩，所以小助手暂时无法帮您查询，非常抱歉！';
             return $content;
         }
         // 选修查询
@@ -183,12 +183,38 @@ function reply_main($request, $w) {
                 $url = 'http://branch2.gdpu.edu.cn/gd/jwc/wx.xuanxiu.api.php?xh=' . $xh . '&pw=' . $pw;
                 $reply_content = file_get_contents ( $url );
             } else {
-                $reply_content = "帐号或密码错误，请输入“重新绑定”重新绑定帐号和密码。\n或者按格式#学号#密码  查询";
+                $reply_content = "帐号或密码错误，请输入“重绑”重新绑定帐号和密码。\n或者按格式#学号#密码  查询";
             }
             return $reply_content;
         }
+        //绑定帐号
+        elseif (strstr($content,"绑定")) {
+            //查询用户名
+            $name = $from;
+            $url = "http://av.jejeso.com/helper/api/check.php?name=".$name;
+            $reply_content = file_get_contents ($url);
+            if($reply_content!='') {//判断用户是否存在 
+                // $reply_content = "用户已绑定";
+                return "用户已绑定";
+            }else {
+                $user = new user;
+                $content = str_replace ( '＃', '#', $content );
+                $ret = explode ( '#', $content );
+                $xh = $ret [1];
+                $pw = $ret [2];
+                if (($xh) && ($pw)) {
+                    $num = $xh;
+                    $pwd = $pw;
+                    $user->blind($name, $num, $pwd);
+                    $content = "绑定成功，以后直接输入成绩即可查成绩，无需再输入学号密码\n";
+                }else{
+                    $content = "请确认【格式】正确\n\n绑定#学号#密码\n重新绑定请回复\n重绑#学号#密码";   
+                }
+                return $content;
+            }
+        }
         //重新绑定
-        elseif (strstr ( $content, "重绑" )) {
+        elseif (strstr($content,"重新绑定")||strstr($content,"重绑")) {
             $name = $from;
             $user = new user;
             $content = str_replace ( '＃', '#', $content );
@@ -297,8 +323,16 @@ function reply_main($request, $w) {
             $reply_content = "联系人:陈正勇\n手机号、微信:18825076954(61954)\nQQ:1249192238";
             return $reply_content;
         }
-        
-        // menu内容
+
+        else if ( strstr ( $content, "新闻" )) {
+            $reply_content = "#title|广药新闻@title|查看最新广药新闻点此进入#url|http://ours.123nat.com:59832/news/#pic";
+            if (strstr ( $reply_content, 'pic' ))           // 多图文回复
+            {
+                $reply_content = replypic ( $reply_content );
+            }
+            return $reply_content;
+        }
+            // menu内容
         if ($flag == "menu" || strstr ( $content, "查询" )) {
             $reply_content = MENU;
         }       
@@ -307,19 +341,20 @@ function reply_main($request, $w) {
             $reply_content = TEXT;
         }       
 
-        // 通过广药内网接口获得返回内容
-        else if ($flag == "6" || $content == "6") {
-            if ($flag == "6") {
-                $reply_content = "查询接口<a href=\"http://www.gzekt.com\">http://www.gzekt.com</a>";
-            }
-        }       
+        // // 通过广药内网接口获得返回内容
+        // else if ($flag == "6" || $content == "6") {
+        //     if ($flag == "6") {
+        //         $reply_content = "查询接口<a href=\"http://www.gzekt.com\">http://www.gzekt.com</a>";
+        //     }
+        // }       
 
         // 通过广药外网网接口获得返回内容
         else if ($flag == "gdpuapi") {
             $g = new WebAPI ();
             //广药新闻
-            if ($content == "1") {
-                $reply_content = $g->get_gdpu_news ();
+            if ($content == "1" || strstr ( $content, "新闻" )) {
+                $reply_content = "#title|广药新闻@title|查看最新广药新闻点此进入#url|http://ours.123nat.com:59832/news/#pic";
+                //$reply_content = $g->get_gdpu_news ();
             } 
             //工作信息
             else if ($content == "2") {

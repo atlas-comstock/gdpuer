@@ -7,14 +7,15 @@ class user{
     }
 
     public function blind($name, $num, $pwd){
-                    $sql = "insert into `gdpuer_user` values('', '$name', '$num', '$pwd')";
-                    mysql_query($sql);
+        $sql = "insert into `gdpuer_user` values('', '$name', '$num', '$pwd')";
+        mysql_query($sql);
     }
 
     public function reblind($name, $num, $pwd){
         $name = '"'.$name.'"';
-            mysql_query("UPDATE `gdpuer_user` SET num=$num, pw=$pwd WHERE name=$name");
+        mysql_query("UPDATE `gdpuer_user` SET num = $num, pw = $pw WHERE name = '$name' ");
     }
+
     public function get_num($name){
         $name = '"'.$name.'"';
         $sql = "SELECT * FROM `gdpuer_user` WHERE name = $name";

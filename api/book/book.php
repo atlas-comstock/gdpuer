@@ -22,7 +22,7 @@ foreach ( $id [1] as $key => $value ) {
 	}
 }
 if ($all != '') {
-	echo 'description|信息查询#title|图书信息' . $all;
+	echo 'description|信息查询#title|图书信息 找书发送:图书+书名即可' . $all;
 } else {
 	echo '亲，图书馆网站的搜索功能出现问题了，无法帮你查询，请反馈信息给图书馆信息技术部~';
 }

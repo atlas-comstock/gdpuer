@@ -8,6 +8,6 @@ $name = '"'.$name.'"';
 $sql = "SELECT * FROM `gdpuer_user` WHERE name = $name";
 $result = mysql_query($sql);
 $data = mysql_fetch_array($result);
-if($data)
+if($data['number'] != '')
     echo "success";
 ?>
